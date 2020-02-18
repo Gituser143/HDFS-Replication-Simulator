@@ -19,6 +19,7 @@
   <component name="ProjectId" id="1XsIorpMsyZeh8eZsykRC2IeD3S" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,6 +30,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -65,13 +67,41 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="555" y="201" width="800" height="675" key="#Plugins" timestamp="1581832779464">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="555" y="201" width="800" height="675" key="#Plugins/0.0.1920.1080@0.0.1920.1080" timestamp="1581832779464" />
     <state x="453" y="201" width="1105" height="678" key="#Project_Structure" timestamp="1581828653196">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="453" y="201" width="1105" height="678" key="#Project_Structure/0.0.1920.1080@0.0.1920.1080" timestamp="1581828653196" />
-    <state x="523" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1581828578387">
+    <state width="1920" height="294" key="GridCell.Tab.0.bottom" timestamp="1581832781467">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="523" y="367" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1581828578387" />
+    <state width="1920" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1581832781467" />
+    <state width="1920" height="294" key="GridCell.Tab.0.center" timestamp="1581832781467">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1920" height="294" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1581832781467" />
+    <state width="1920" height="294" key="GridCell.Tab.0.left" timestamp="1581832781467">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1920" height="294" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1581832781467" />
+    <state width="1920" height="294" key="GridCell.Tab.0.right" timestamp="1581832781467">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1920" height="294" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1581832781467" />
+    <state x="405" y="159" width="1381" height="731" key="SettingsEditor" timestamp="1581831690940">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="405" y="159" width="1381" height="731" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1581831690940" />
+    <state x="523" y="367" key="com.intellij.ide.util.TipDialog" timestamp="1581832858801">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="523" y="367" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1581832858801" />
+    <state x="616" y="239" width="686" height="678" key="search.everywhere.popup" timestamp="1581832880831">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="616" y="239" width="686" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1581832880831" />
   </component>
 </project>
