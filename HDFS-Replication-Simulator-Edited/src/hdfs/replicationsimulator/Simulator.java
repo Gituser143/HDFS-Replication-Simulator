@@ -83,8 +83,8 @@ public class Simulator {
 
 				// Fill the list of events
 				if (timeRetrieved && nodeRetrieved) {
-					simulationFailureEvents.add(new Event(lastFailingNode,
-							Event.FAILURE, lastFailureTime));
+					//simulationFailureEvents.add(new Event(lastFailingNode,
+						//	Event.FAILURE, lastFailureTime));
 					timeRetrieved = false;
 					nodeRetrieved = false;
 				}

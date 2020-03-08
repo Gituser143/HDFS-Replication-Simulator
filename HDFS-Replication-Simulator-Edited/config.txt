@@ -1,9 +1,8 @@
-replica=2
+replica=5
 bw=1024
 block=64
-heartbeat=200
+heartbeat=2000
 timeout=3
-nodes=20
-nBlocks=15
-failure_time=420
-failing_node_id=12
+nodes=5
+nBlocks=3
+

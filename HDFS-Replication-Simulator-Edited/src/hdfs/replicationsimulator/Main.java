@@ -31,5 +31,7 @@ public class Main {
 		Simulator.printResults();
 		System.exit(0);
 	}
-	
+	//failure_time=420
+	//failing_node_id=12
+
 }
