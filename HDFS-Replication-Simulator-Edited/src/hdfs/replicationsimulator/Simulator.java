@@ -146,6 +146,7 @@ public class Simulator {
 
 	private static void initializeBlocks() {
 		int currentDN = 0;
+		Power power = new Power();
 		for (int i = 0; i < numberofBlocks; i++) {
 			// Create the Block
 			Block block = new BlockInfo(i);
@@ -153,7 +154,7 @@ public class Simulator {
 			// Add the block to the namenode index
 			namenode.addBlock((BlockInfo)block);
 
-			
+			//System.out.println("Block Number = " + i);
 			/* THIS VERSION USE RANDOM AND SO IS NOT GOOD.
 			// Adds the block randomly to a node
 			 * Random r = new Random();
@@ -172,12 +173,20 @@ public class Simulator {
 				//int index = idDatanode - 1;
 				Datanode dn = allDatanodes.getNode(idDatanode);
 				dn.addBlock(block);
+				if(dn.getType() == 1) {
+					power.totalPower += power.writeSsd;
+				}
+				else {
+					power.totalPower += power.writeHdd;
+				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				System.out.println("CurrentDN = " + currentDN);
-				currentDN = (currentDN==(numberofDatanodes/2)-1)? 0: currentDN+1;
+				//System.out.println("CurrentDN = " + currentDN);
+				//currentDN = (currentDN == (numberofDatanodes/2)-1)? 0: currentDN+1; // Initialize all blocks to SSD
+				currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}
 		System.out.print(numberofBlocks + " Blocks distributed\n");
+		System.out.print(power.totalPower + " Watts of Power consumed for Initialization\n");
 	}
 
 	public static void start() {

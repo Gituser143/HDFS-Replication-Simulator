@@ -23,7 +23,7 @@ public class Main {
 		}
 		Simulator.init(configFile);
 		Simulator.start();
-		
+		Power power = new Power();
 //		while (!isEnded) wait();
 		Thread.sleep(12000);
 		System.out.println("END");

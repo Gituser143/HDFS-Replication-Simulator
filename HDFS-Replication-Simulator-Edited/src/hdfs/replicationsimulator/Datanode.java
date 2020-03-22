@@ -46,6 +46,9 @@ public class Datanode extends Node {
 	int getId(){
 		return this.id;
 	}
+	int getType(){
+		return this.type;
+	}
 	
 	
 	/**

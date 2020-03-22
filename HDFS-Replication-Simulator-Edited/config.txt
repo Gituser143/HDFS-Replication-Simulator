@@ -1,7 +1,7 @@
-replica=5
+replica=3
 bw=1024
 block=128
 heartbeat=2000
 timeout=3
-nodes=6
+nodes=10
 nBlocks=30
