@@ -13,16 +13,17 @@ public class DatanodeInfo {
 	private int id;
 	private long lastHB;
 	private List<BlockInfo> blocks;
-	
+	private int type;
 	private List<Event> commands;
 	Object datanodeLock = new Object();
 	
-	public DatanodeInfo(int id, int capacity) {
+	public DatanodeInfo(int id, int capacity, int type) {
 		this.id = id;
 		this.blocks = new ArrayList<BlockInfo>();
 		this.capacity = capacity;
 		this.lastHB = Node.now(); //To correct problems at startup
 		this.commands = new ArrayList<Event>();
+		this.type = type;
 	}
 	
 	int getId() {

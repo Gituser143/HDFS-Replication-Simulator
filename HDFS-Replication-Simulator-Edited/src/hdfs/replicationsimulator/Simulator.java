@@ -123,11 +123,22 @@ public class Simulator {
 		// Create all the datanodes
 		allDatanodes = new AllDatanode();
 
-		for (int i = 0; i < numberofDatanodes; i++) {
-			allDatanodes.addNode(new Datanode(i, dataNodeCapacity));
+		for (int i = 0; i < numberofDatanodes/2; i++) {
+			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 1));
 
-			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity);
+			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 1);
 			namenode.addNode(datanodeInfo);
+			System.out.println("Created SSD with ID " + i);
+
+		}
+
+		for (int i = numberofDatanodes/2; i < numberofDatanodes; i++) {
+			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
+
+			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
+			namenode.addNode(datanodeInfo);
+			System.out.println("Created HDD with ID " + i);
+
 		}
 
 		System.out.print(numberofDatanodes + " Datanodes Created.\n");
@@ -163,7 +174,7 @@ public class Simulator {
 				dn.addBlock(block);
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
 				
-				currentDN = (currentDN==numberofDatanodes-1)? 0: currentDN+1;
+				currentDN = (currentDN==(numberofDatanodes/2)-1)? 0: currentDN+1;
 			}
 		}
 		System.out.print(numberofBlocks + " Blocks distributed\n");

@@ -20,6 +20,7 @@ public class Datanode extends Node {
 	
 	private List<Block> blocks;
 
+	private int type;
 	/* 
 	 * Status
 	 */
@@ -33,12 +34,13 @@ public class Datanode extends Node {
 
 	public boolean blockChecking = false;
 	
-	public Datanode(int id, int capacity) {
+	public Datanode(int id, int capacity, int type) {
 		this.id=id;
 		this.blocks = new ArrayList<Block>();
 		this.lastHB = Node.now()-3000;
 		this.commandQueue = new ArrayList<Event>();
 		this.pendingBlocks = new ConcurrentLinkedQueue<Block>();
+		this.type = type; // 1 for SSD 0 for HDD
 	}
 	
 	int getId(){
