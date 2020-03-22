@@ -37,7 +37,7 @@ public class Simulator {
 	private static int heartbeat = 1000;
 	private static int timeout = 3;
 	private static int blockSize = 64;
-	private static int clusterPercentage = 64;
+	private static int numberofSSDs = 64;
 
 	private static List<Event> simulationFailureEvents;
 
@@ -50,7 +50,7 @@ public class Simulator {
 
 			int lastFailureTime = 0;
 			int lastFailingNode = 0;
-			int percent = 50;
+			int fraction = 50;
 			boolean timeRetrieved = false;
 			boolean nodeRetrieved = false;
 
@@ -73,8 +73,8 @@ public class Simulator {
 					blockSize = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("nBlocks=")) {
 					numberofBlocks = Integer.parseInt(data.split("=")[1]);
-				} else if (data.contains("hot_zone=")) {
-					percent = Integer.parseInt(data.split("=")[1]);
+				} else if (data.contains("HZpercent")) {
+					fraction = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("dn_capacity=")) {
 					dataNodeCapacity = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("failure_time=") && !timeRetrieved) {
@@ -92,7 +92,7 @@ public class Simulator {
 					timeRetrieved = false;
 					nodeRetrieved = false;
 				}
-				clusterPercentage = (percent * numberofDatanodes)/100;
+				numberofSSDs = (fraction * numberofDatanodes)/100;
 			}
 
 		} catch (IOException e) {
@@ -127,8 +127,8 @@ public class Simulator {
 
 		// Create all the datanodes
 		allDatanodes = new AllDatanode();
-		//int clusterPercentage = numberofDatanodes/3;
-		for (int i = 0; i < clusterPercentage; i++) {
+		//int numberofSSDs = numberofDatanodes/3;
+		for (int i = 0; i < numberofSSDs; i++) {
 			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 1));
 
 			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 1);
@@ -137,7 +137,7 @@ public class Simulator {
 
 		}
 
-		for (int i = clusterPercentage; i < numberofDatanodes; i++) {
+		for (int i = numberofSSDs; i < numberofDatanodes; i++) {
 			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
 
 			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
@@ -185,7 +185,7 @@ public class Simulator {
 					power.totalPower += power.writeHdd;
 				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				currentDN = (currentDN == clusterPercentage-1)? 0: currentDN+1; // Initialize all blocks to SSD
+				currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}

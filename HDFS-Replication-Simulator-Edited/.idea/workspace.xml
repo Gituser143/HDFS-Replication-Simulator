@@ -34,9 +34,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="configurable.group.build.tools" />
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -92,10 +92,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="555" y="201" width="800" height="675" key="#Plugins/0.0.1920.1080@0.0.1920.1080" timestamp="1581832779464" />
-    <state x="453" y="201" width="1105" height="678" key="#Project_Structure" timestamp="1581828653196">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="322" y="165" width="835" height="540" key="#Project_Structure" timestamp="1584902775847">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="453" y="201" width="1105" height="678" key="#Project_Structure/0.0.1920.1080@0.0.1920.1080" timestamp="1581828653196" />
+    <state x="322" y="165" width="835" height="540" key="#Project_Structure/0.27.1366.741@0.27.1366.741" timestamp="1584902775847" />
     <state x="550" y="201" width="800" height="675" key="#Updates" timestamp="1583652941640">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -108,22 +109,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="731" y="298" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1583651328530" />
-    <state width="1920" height="298" key="GridCell.Tab.0.bottom" timestamp="1584897785516">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1320" height="242" key="GridCell.Tab.0.bottom" timestamp="1584904259767">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1920" height="298" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1584897785516" />
-    <state width="1920" height="298" key="GridCell.Tab.0.center" timestamp="1584897785516">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1320" height="242" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1584904259767" />
+    <state width="1320" height="242" key="GridCell.Tab.0.center" timestamp="1584904259767">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1920" height="298" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1584897785516" />
-    <state width="1920" height="298" key="GridCell.Tab.0.left" timestamp="1584897785516">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1320" height="242" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1584904259767" />
+    <state width="1320" height="242" key="GridCell.Tab.0.left" timestamp="1584904259767">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1920" height="298" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1584897785516" />
-    <state width="1920" height="298" key="GridCell.Tab.0.right" timestamp="1584897785516">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1320" height="242" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1584904259767" />
+    <state width="1320" height="242" key="GridCell.Tab.0.right" timestamp="1584904259767">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1920" height="298" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1584897785516" />
+    <state width="1320" height="242" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1584904259767" />
     <state x="405" y="159" width="1381" height="738" key="SettingsEditor" timestamp="1584870360195">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -140,5 +145,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="616" y="239" width="686" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1581832880831" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/HDFS_Replication_Simulator$Main.ic" NAME="Main Coverage Results" MODIFIED="1584904259743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>hdfs.replicationsimulator.*</FILTER>
+    </SUITE>
   </component>
 </project>
