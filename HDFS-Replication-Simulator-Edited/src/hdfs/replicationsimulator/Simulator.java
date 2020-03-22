@@ -173,7 +173,7 @@ public class Simulator {
 				Datanode dn = allDatanodes.getNode(idDatanode);
 				dn.addBlock(block);
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				
+				System.out.println("CurrentDN = " + currentDN);
 				currentDN = (currentDN==(numberofDatanodes/2)-1)? 0: currentDN+1;
 			}
 		}
