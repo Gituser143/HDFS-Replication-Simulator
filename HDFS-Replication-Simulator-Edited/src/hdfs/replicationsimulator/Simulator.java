@@ -185,9 +185,7 @@ public class Simulator {
 					power.totalPower += power.writeHdd;
 				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				//System.out.println("CurrentDN = " + currentDN);
-				currentDN = (currentDN == clusterPercentage-1)? 0: currentDN+1; // Initialize all blocks to SSD, 1/3 have SSD
-				//currentDN = (currentDN == (numberofDatanodes/2)-1)? 0: currentDN+1; // Initialize all blocks to SSD, 50% have SSD
+				currentDN = (currentDN == clusterPercentage-1)? 0: currentDN+1; // Initialize all blocks to SSD
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}

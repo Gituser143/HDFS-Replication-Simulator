@@ -25,7 +25,7 @@ public class Main {
 		Simulator.start();
 		Power power = new Power();
 //		while (!isEnded) wait();
-		Thread.sleep(12000);
+		Thread.sleep(2000);
 		System.out.println("END");
 		
 		Simulator.printResults();
