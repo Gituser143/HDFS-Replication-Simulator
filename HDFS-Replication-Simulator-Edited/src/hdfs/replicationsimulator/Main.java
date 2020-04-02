@@ -23,16 +23,16 @@ public class Main {
 		}
 		Simulator.init(configFile);
 		Simulator.start();
-		Power power = new Power();
+
 		int sleepTime = 2000;
-//		while (!isEnded) wait();
+
 		Thread.sleep(sleepTime);
 		Simulator.makeCold();
+
 		//TODO TRANSFER FROM HOT TO COLD
+
 		Simulator.printLastAccessed();
-//		Simulator.transfer(hot to cold);
-//		Thread.sleep(2000);
-//		Simulator.transfer(cold to hot);
+		//Simulator.transfer(hot to cold);
 
 		System.out.println("END");
 		

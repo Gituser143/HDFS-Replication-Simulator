@@ -113,7 +113,7 @@ public class Namenode extends Node {
 		/**
 	   */
 		public void run() {
-			Simulator.addTrace(new SimTrace("Namenode heartbeat monitor created"));
+			//Simulator.addTrace(new SimTrace("Namenode heartbeat monitor created"));
 
 			while (isRunning) {
 				try {

@@ -7,7 +7,7 @@ public class NodeKiller implements Runnable {
 	@Override
 	public void run() {
 		
-		Simulator.addTrace(new SimTrace("Started NodeKiller"));
+		//Simulator.addTrace(new SimTrace("Started NodeKiller"));
 		
 		long initialTime = 0;
 		List<Event> failures = Simulator.getSimulationFailureEvents();

@@ -196,7 +196,7 @@ public class Simulator {
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}
-		System.out.print(numberofBlocks + " Blocks distributed\n");
+		System.out.print(numberofBlocks + " Blocks distributed\n\n\n");
 		System.out.print(power.totalPower + " Watts of Power consumed for Initialization\n");
 	}
 
@@ -326,8 +326,8 @@ public class Simulator {
 
 		Power power = new Power();
 		Power power2 = new Power();
-
-		System.out.println("Making blocks cold");
+		int blockPercentage = 50;
+		//System.out.println("Making blocks cold");
 
 		if(numberofSSDs == 0) {
 			for(int i = 0; i < numberofDatanodes; i++){
@@ -341,13 +341,15 @@ public class Simulator {
 				}
 
 				List<Block> blocks = dn.getBlocks();
-
-				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++ , blockPercent--) {
+				//for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
 					Block block = blocks.get(blockIndex);
 
-					int randNum = (int) Math.round(Math.random());
-					//System.out.println(randNum);
-					if(randNum != 0) {
+					//int randNum = (int) Math.round(Math.random());
+
+					if(blockPercent > 0) {
+					//if(randNum != 0) {
 						//block.changeLastAccess();
 						for (int j = 0; j < numberofDatanodes; j++) {
 							Datanode dn2 = allDatanodes.getNode(j);
@@ -371,7 +373,7 @@ public class Simulator {
 								Block block2 = blocks2.get(blockIndex2);
 								if(block.getId() == block2.getId()){
 									power.totalPower += power.readHdd;
-									block.changeTimesAccessed();
+									block2.changeTimesAccessed();
 								}
 							}
 						}
@@ -392,13 +394,15 @@ public class Simulator {
 				}
 
 				List<Block> blocks = dn.getBlocks();
-
-				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				//System.out.println("blocksize " + blocks.size());
+				int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++ , blockPercent--) {
 					Block block = blocks.get(blockIndex);
 
-					int randNum = (int) Math.round(Math.random());
-					//System.out.println(randNum);
-					if(randNum != 0) {
+					//int randNum = (int) Math.round(Math.random());
+					//System.out.println(blockPercent);
+					if(blockPercent > 0) {
+					//if(randNum != 0) {
 						//block.changeLastAccess();
 						for (int j = 0; j < numberofDatanodes; j++) {
 							Datanode dn2 = allDatanodes.getNode(j);
@@ -408,6 +412,7 @@ public class Simulator {
 								Block block2 = blocks2.get(blockIndex2);
 								if (block.getId() == block2.getId()) {
 									block2.changeLastAccess();
+									//block.changeLastAccess();
 								}
 							}
 						}
@@ -422,7 +427,7 @@ public class Simulator {
 								Block block2 = blocks2.get(blockIndex2);
 								if(block.getId() == block2.getId()){
 									power.totalPower += power.readSsd;
-									block.changeTimesAccessed();
+									block2.changeTimesAccessed();
 								}
 							}
 						}
@@ -433,7 +438,7 @@ public class Simulator {
 
 
 		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
-		System.out.print(power2.totalPower + " Watts of Power consumed for Cluster running\n");
+		System.out.print(power2.totalPower + " Watts of Power consumed for running the cluster\n");
 
 	}
 
