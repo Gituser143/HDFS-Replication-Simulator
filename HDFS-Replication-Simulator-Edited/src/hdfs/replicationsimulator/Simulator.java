@@ -185,7 +185,14 @@ public class Simulator {
 					power.totalPower += power.writeHdd;
 				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
+				if(numberofSSDs == 0){
+					currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
+
+				}
+				else {
+					currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
+				}
+
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}

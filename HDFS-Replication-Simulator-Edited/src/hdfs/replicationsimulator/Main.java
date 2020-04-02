@@ -26,6 +26,10 @@ public class Main {
 		Power power = new Power();
 //		while (!isEnded) wait();
 		Thread.sleep(2000);
+//		Simulator.transfer(hot to cold);
+//		Thread.sleep(2000);
+//		Simulator.transfer(cold to hot);
+
 		System.out.println("END");
 		
 		Simulator.printResults();
