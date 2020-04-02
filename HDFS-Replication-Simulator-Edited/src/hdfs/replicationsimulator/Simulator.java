@@ -37,7 +37,7 @@ public class Simulator {
 	private static int timeout = 3;
 	private static int blockSize = 64;
 	private static int numberofSSDs = 64;
-	private static int blockPercentage = 80;
+	private static int blockPercentage = 50; //Percentage of blocks to go cold
 	private static List<Event> simulationFailureEvents;
 
 	public static void init(String configFile) {
