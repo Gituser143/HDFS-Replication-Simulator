@@ -6,7 +6,13 @@ public class Power {
 
   public int writeSsd;
   public int readSsd;
+
+  public int ssdActive;
+  public int hddActive;
+  public int hddSleep;
+
   public int totalPower;
+
   public Power()
   {
     this.readHdd = 6;
@@ -14,6 +20,10 @@ public class Power {
 
     this.readSsd = 2;
     this.writeSsd = 2;
+
+    this.ssdActive = 8;
+    this.hddActive = 17;
+    this.hddSleep = 1;
 
     this.totalPower = 0;
   }

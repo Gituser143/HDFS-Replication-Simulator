@@ -316,7 +316,7 @@ public class Simulator {
 			System.out.println("Datanode : " + i);
 			for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
 				Block block = blocks.get(blockIndex);
-				System.out.println("Last access of block " + block.getId() + ":" + block.getTimesAccessed());
+				System.out.println("Number of times block accessed. Block id : " + block.getId() + ":" + block.getTimesAccessed());
 
 			}
 		}
@@ -325,52 +325,116 @@ public class Simulator {
 	public static void makeCold() {
 
 		Power power = new Power();
+		Power power2 = new Power();
+
 		System.out.println("Making blocks cold");
-		for(int i = 0; i < numberofSSDs; i++){
-			Datanode dn = allDatanodes.getNode(i);
-			List<Block> blocks = dn.getBlocks();
 
-			for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
-				Block block = blocks.get(blockIndex);
+		if(numberofSSDs == 0) {
+			for(int i = 0; i < numberofDatanodes; i++){
+				Datanode dn = allDatanodes.getNode(i);
 
-				int randNum = (int) Math.round(Math.random());
-				//System.out.println(randNum);
-				if(randNum != 0) {
-					//block.changeLastAccess();
-					for (int j = 0; j < numberofSSDs; j++) {
-						Datanode dn2 = allDatanodes.getNode(j);
-						List<Block> blocks2 = dn2.getBlocks();
-
-						for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
-							Block block2 = blocks2.get(blockIndex2);
-							if (block.getId() == block2.getId()) {
-								block2.changeLastAccess();
-							}
-						}
-					}
+				if(dn.getType() == 1) {
+					power2.totalPower += power2.ssdActive;
 				}
 				else {
-					//power.totalPower += power.readSsd;
-					for(int j = 0; j < numberofSSDs; j++) {
-						Datanode dn2 = allDatanodes.getNode(j);
-						List<Block> blocks2 = dn2.getBlocks();
-
-						for(int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
-							Block block2 = blocks2.get(blockIndex2);
-							if(block.getId() == block2.getId()){
-								power.totalPower += power.readSsd;
-								block.changeTimesAccessed();
-							}
-
-						}
-					}
-
+					power2.totalPower += power2.hddActive;
 				}
 
+				List<Block> blocks = dn.getBlocks();
 
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+					Block block = blocks.get(blockIndex);
+
+					int randNum = (int) Math.round(Math.random());
+					//System.out.println(randNum);
+					if(randNum != 0) {
+						//block.changeLastAccess();
+						for (int j = 0; j < numberofDatanodes; j++) {
+							Datanode dn2 = allDatanodes.getNode(j);
+							List<Block> blocks2 = dn2.getBlocks();
+
+							for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+								Block block2 = blocks2.get(blockIndex2);
+								if (block.getId() == block2.getId()) {
+									block2.changeLastAccess();
+								}
+							}
+						}
+					}
+					else {
+						//power.totalPower += power.readSsd;
+						for(int j = 0; j < numberofDatanodes; j++) {
+							Datanode dn2 = allDatanodes.getNode(j);
+							List<Block> blocks2 = dn2.getBlocks();
+
+							for(int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+								Block block2 = blocks2.get(blockIndex2);
+								if(block.getId() == block2.getId()){
+									power.totalPower += power.readHdd;
+									block.changeTimesAccessed();
+								}
+							}
+						}
+					}
+				}
 			}
 		}
+
+		else {
+			for(int i = 0; i < numberofDatanodes; i++){
+				Datanode dn = allDatanodes.getNode(i);
+
+				if(dn.getType() == 1) {
+					power2.totalPower += power2.ssdActive;
+				}
+				else {
+					power2.totalPower += power2.hddSleep;
+				}
+
+				List<Block> blocks = dn.getBlocks();
+
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+					Block block = blocks.get(blockIndex);
+
+					int randNum = (int) Math.round(Math.random());
+					//System.out.println(randNum);
+					if(randNum != 0) {
+						//block.changeLastAccess();
+						for (int j = 0; j < numberofDatanodes; j++) {
+							Datanode dn2 = allDatanodes.getNode(j);
+							List<Block> blocks2 = dn2.getBlocks();
+
+							for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+								Block block2 = blocks2.get(blockIndex2);
+								if (block.getId() == block2.getId()) {
+									block2.changeLastAccess();
+								}
+							}
+						}
+					}
+					else {
+						//power.totalPower += power.readSsd;
+						for(int j = 0; j < numberofDatanodes; j++) {
+							Datanode dn2 = allDatanodes.getNode(j);
+							List<Block> blocks2 = dn2.getBlocks();
+
+							for(int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+								Block block2 = blocks2.get(blockIndex2);
+								if(block.getId() == block2.getId()){
+									power.totalPower += power.readSsd;
+									block.changeTimesAccessed();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
 		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
+		System.out.print(power2.totalPower + " Watts of Power consumed for Cluster running\n");
+
 	}
 
 
