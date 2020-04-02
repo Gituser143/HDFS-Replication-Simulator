@@ -172,7 +172,7 @@ public class Simulator {
 			}
 			*/
 			//adds the blocks to a node (chained mode)
-			
+
 			for (int j = 0; j < numberofReplicas; j++) {
 				int idDatanode = currentDN;
 				//int index = idDatanode - 1;
@@ -309,4 +309,51 @@ public class Simulator {
 		return allDatanodes;
 	}
 
+	public static void printLastAccessed() {
+		for (int j = 0; j < numberofSSDs; j++) {
+			Datanode dn2 = allDatanodes.getNode(j);
+			List<Block> blocks2 = dn2.getBlocks();
+
+			for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+				Block block2 = blocks2.get(blockIndex2);
+				System.out.println("Last accessed of block " + block2.getId() + ":" + block2.getLastAccessed());
+
+			}
+		}
+	}
+
+	public static void makeCold() {
+
+		Power power = new Power();
+		System.out.println("Making blocks cold");
+		for(int i = 0; i < numberofSSDs; i++){
+			Datanode dn = allDatanodes.getNode(i);
+			List<Block> blocks = dn.getBlocks();
+
+			for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				Block block = blocks.get(blockIndex);
+
+				int randNum = (int) Math.round(Math.random());
+				if(randNum == 0) {
+					block.accessBlock();
+					for(int j = 0; j < numberofSSDs; j++) {
+						Datanode dn2 = allDatanodes.getNode(j);
+						List<Block> blocks2 = dn2.getBlocks();
+
+						for(int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+							Block block2 = blocks2.get(blockIndex2);
+							if(block.getId() == block2.getId()){
+								block2.accessBlock();
+							}
+						}
+					}
+
+				}
+
+			}
+		}
+	}
+
+
 }
+

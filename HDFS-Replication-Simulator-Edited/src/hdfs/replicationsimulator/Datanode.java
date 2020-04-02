@@ -97,6 +97,7 @@ public class Datanode extends Node {
 		return this.time_down;
 	}
 
+	public List<Block> getBlocks() { return this.blocks; }
 	/*
 	public void setPendingBlock(int idBlock) {
 		Block b = findBlockById(idBlock);

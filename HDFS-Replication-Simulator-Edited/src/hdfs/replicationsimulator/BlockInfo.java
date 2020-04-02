@@ -8,10 +8,11 @@ import java.util.List;
 public class BlockInfo extends Block implements  Comparable<BlockInfo> {
 
 	private List<DatanodeInfo> datanodes;
-	
+
 	BlockInfo(int id) {
 		super(id);
 		datanodes = new ArrayList<DatanodeInfo>();
+
 	}
 
 	/**
@@ -20,6 +21,8 @@ public class BlockInfo extends Block implements  Comparable<BlockInfo> {
 	public void addDatanode(DatanodeInfo dn) {
 		datanodes.add(dn);
 	}
+
+
 	
 	/**
 	 * Remove a node to the list of storage nodes
