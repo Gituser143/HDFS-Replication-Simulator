@@ -310,13 +310,13 @@ public class Simulator {
 	}
 
 	public static void printLastAccessed() {
-		for (int j = 0; j < numberofSSDs; j++) {
-			Datanode dn2 = allDatanodes.getNode(j);
-			List<Block> blocks2 = dn2.getBlocks();
-
-			for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
-				Block block2 = blocks2.get(blockIndex2);
-				System.out.println("Last accessed of block " + block2.getId() + ":" + block2.getLastAccessed());
+		for (int i = 0; i < numberofDatanodes; i++) {
+			Datanode dn = allDatanodes.getNode(i);
+			List<Block> blocks = dn.getBlocks();
+			System.out.println("Datanode : " + i);
+			for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				Block block = blocks.get(blockIndex);
+				System.out.println("Last access of block " + block.getId() + ":" + block.getTimesAccessed());
 
 			}
 		}
@@ -334,8 +334,23 @@ public class Simulator {
 				Block block = blocks.get(blockIndex);
 
 				int randNum = (int) Math.round(Math.random());
-				if(randNum == 0) {
-					block.accessBlock();
+				//System.out.println(randNum);
+				if(randNum != 0) {
+					//block.changeLastAccess();
+					for (int j = 0; j < numberofSSDs; j++) {
+						Datanode dn2 = allDatanodes.getNode(j);
+						List<Block> blocks2 = dn2.getBlocks();
+
+						for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
+							Block block2 = blocks2.get(blockIndex2);
+							if (block.getId() == block2.getId()) {
+								block2.changeLastAccess();
+							}
+						}
+					}
+				}
+				else {
+					//power.totalPower += power.readSsd;
 					for(int j = 0; j < numberofSSDs; j++) {
 						Datanode dn2 = allDatanodes.getNode(j);
 						List<Block> blocks2 = dn2.getBlocks();
@@ -343,15 +358,19 @@ public class Simulator {
 						for(int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
 							Block block2 = blocks2.get(blockIndex2);
 							if(block.getId() == block2.getId()){
-								block2.accessBlock();
+								power.totalPower += power.readSsd;
+								block.changeTimesAccessed();
 							}
+
 						}
 					}
 
 				}
 
+
 			}
 		}
+		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
 	}
 
 
