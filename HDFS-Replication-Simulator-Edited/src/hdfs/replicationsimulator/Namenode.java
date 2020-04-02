@@ -12,9 +12,9 @@ import java.util.Random;
  * 
  * This node store the metadata, the blocks locality and handle the replication
  * system
- * 
- * @author Corentone
- * @version 0.1
+ *
+ * @author Corentone, Gituser143, Abhishek262, nsankethreddy
+ * @version 1.1
  */
 
 public class Namenode extends Node {

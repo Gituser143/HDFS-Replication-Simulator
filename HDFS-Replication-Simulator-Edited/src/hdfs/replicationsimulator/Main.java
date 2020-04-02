@@ -3,8 +3,8 @@ package hdfs.replicationsimulator;
  * 
  * Launches the simulator
  * 
- * @author peteratt
- * @version 0.1
+ * @author peteratt, Gituser143, Abhishek262, nsankethreddy
+ * @version 1.1
  */
 
 
@@ -31,7 +31,7 @@ public class Main {
 
 		//TODO TRANSFER FROM HOT TO COLD
 
-		Simulator.printLastAccessed();
+		//Simulator.printLastAccessed();
 		//Simulator.transfer(hot to cold);
 
 		System.out.println("END");
