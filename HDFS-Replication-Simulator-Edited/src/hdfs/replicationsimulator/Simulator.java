@@ -37,7 +37,7 @@ public class Simulator {
 	private static int timeout = 3;
 	private static int blockSize = 64;
 	private static int numberofSSDs = 64;
-
+	private static int blockPercentage = 80;
 	private static List<Event> simulationFailureEvents;
 
 	public static void init(String configFile) {
@@ -70,6 +70,8 @@ public class Simulator {
 					timeout = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("block=")) {
 					blockSize = Integer.parseInt(data.split("=")[1]);
+				} else if (data.contains("coldPercent=")) {
+					blockPercentage = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("nBlocks=")) {
 					numberofBlocks = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("HZpercent")) {
@@ -325,7 +327,7 @@ public class Simulator {
 
 		Power power = new Power();
 		Power power2 = new Power();
-		int blockPercentage = 50; //percentage of blocks to turn cold
+		//int blockPercentage = 50; //percentage of blocks to turn cold
 
 		for(int i = 0; i < numberofDatanodes; i++){
 			Datanode dn = allDatanodes.getNode(i);

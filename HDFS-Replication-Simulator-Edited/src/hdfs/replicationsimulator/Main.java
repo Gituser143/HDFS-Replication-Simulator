@@ -31,7 +31,7 @@ public class Main {
 
 		//TODO TRANSFER FROM HOT TO COLD
 
-		//Simulator.printLastAccessed();
+		Simulator.printLastAccessed();
 		//Simulator.transfer(hot to cold);
 
 		System.out.println("END");

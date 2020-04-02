@@ -5,4 +5,5 @@ heartbeat=2000
 timeout=3
 nodes=5
 nBlocks=6
-HZpercent=40
+HZpercent=0
+coldPercent=80
