@@ -28,6 +28,7 @@ public class Main {
 //		while (!isEnded) wait();
 		Thread.sleep(sleepTime);
 		Simulator.makeCold();
+		//TODO TRANSFER FROM HOT TO COLD
 		Simulator.printLastAccessed();
 //		Simulator.transfer(hot to cold);
 //		Thread.sleep(2000);
