@@ -494,5 +494,20 @@ public class Simulator {
 		}
 
 	}
+	public static void accessData(){
+		Power power = new Power();
+		int i;
+		for(i=0;i<numberofSSDs;i++){
+			Datanode dn = allDatanodes.getNode(i);
+			List<Block> blocks = dn.getBlocks();
+			for (int blockIndex=0;blockIndex< blocks.size();blockIndex++){
+				Block block = blocks.get(blockIndex);
+				block.changeTimesAccessed();
+				block.access();
+				power.totalPower+=power.readSsd;
+				power.totalPower+=power.ssdActive;
+			}
+		}
+	}
 }
 

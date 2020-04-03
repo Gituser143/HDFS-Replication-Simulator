@@ -14,6 +14,9 @@ public class Block {
 		return this.id;
 	}
 	//double getLast_accessed() {	return this.last_accessed; }
+
+	public void access() { this.lastAccessed = 0; }
+
 	public void changeLastAccess() {
 		this.lastAccessed += 1;
 	}
