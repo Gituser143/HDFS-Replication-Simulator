@@ -411,74 +411,78 @@ public class Simulator {
 	}
 
 	public static void moveBlocks(){
-		int threshold = 3;
-		Power power = new Power();
-		int currentDN = numberofSSDs;
-		List<Integer> idlist = new ArrayList<>();
+		if(numberofSSDs != numberofDatanodes) {
+			int threshold = 3;
+			Power power = new Power();
+			int currentDN = numberofSSDs;
+			List<Integer> idlist = new ArrayList<>();
 
-		//Get list of blocks that are cold
-		for(int i = 0; i < numberofSSDs; i++) {
-			Datanode dn = allDatanodes.getNode(i);
-			List<Block> blocks = dn.getBlocks();
+			//Get list of blocks that are cold
+			for(int i = 0; i < numberofSSDs; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
 
-			for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
-				Block block = blocks.get(blockIndex);
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+					Block block = blocks.get(blockIndex);
 
-				int id = block.getId();
-				boolean flag = true;
+					int id = block.getId();
+					boolean flag = true;
 
+					Iterator itr = idlist.iterator();
+					while (itr.hasNext())
+					{
+						int x = (Integer)itr.next();
+						if (x == id)
+							flag = false;
+					}
+
+					if(block.getLastAccessed() > threshold & flag) {
+						idlist.add(id);
+					}
+				}
+			}
+
+			//Remove list of blocks from hot zone
+			for (int i = 0; i < numberofSSDs; i++) {
+				Datanode dn = allDatanodes.getNode(i);
 				Iterator itr = idlist.iterator();
 				while (itr.hasNext())
 				{
-					int x = (Integer)itr.next();
-					if (x == id)
-						flag = false;
-				}
-
-				if(block.getLastAccessed() > threshold & flag) {
-					idlist.add(id);
+					int id = (Integer)itr.next();
+					dn.removeBlock(id);
 				}
 			}
-		}
 
-		//Remove list of blocks from hot zone
-		for (int i = 0; i < numberofSSDs; i++) {
-			Datanode dn = allDatanodes.getNode(i);
-			Iterator itr = idlist.iterator();
-			while (itr.hasNext())
-			{
-				int id = (Integer)itr.next();
-				dn.removeBlock(id);
-			}
-		}
+			//Duplicate blocks within cold zone
+			for (int i = 0; i < idlist.size(); i++) {
+				Block block = new BlockInfo(idlist.get(i));
 
-		//Duplicate blocks within cold zone
-		for (int i = 0; i < idlist.size(); i++) {
-			Block block = new BlockInfo(idlist.get(i));
+				for (int j = 0; j < numberofReplicasCold; j++) {
+					int idDatanode = currentDN;
+					Datanode dn = allDatanodes.getNode(idDatanode);
+					dn.addBlock(block);
+					if(dn.getType() == 1) {
+						power.totalPower += power.writeSsd;
+						power.totalPower += power.ssdActive;
+					}
+					else {
+						power.totalPower += power.writeHdd;
+						power.totalPower += power.hddActive;
+					}
+					namenode.initAddBlock(idDatanode, (BlockInfo)block);
+					if(numberofSSDs == 0){
+						currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1;
 
-			for (int j = 0; j < numberofReplicasCold; j++) {
-				int idDatanode = currentDN;
-				Datanode dn = allDatanodes.getNode(idDatanode);
-				dn.addBlock(block);
-				if(dn.getType() == 1) {
-					power.totalPower += power.writeSsd;
-					power.totalPower += power.ssdActive;
-				}
-				else {
-					power.totalPower += power.writeHdd;
-					power.totalPower += power.hddActive;
-				}
-				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				if(numberofSSDs == 0){
-					currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1;
-
-				}
-				else {
-					currentDN = (currentDN == numberofDatanodes-1)? numberofSSDs: currentDN+1;
+					}
+					else {
+						currentDN = (currentDN == numberofDatanodes-1)? numberofSSDs: currentDN+1;
+					}
 				}
 			}
+			
+			System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
 		}
-		System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
+
 	}
 }
 
