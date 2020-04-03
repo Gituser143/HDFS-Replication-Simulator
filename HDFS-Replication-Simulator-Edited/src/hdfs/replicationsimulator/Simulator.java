@@ -441,8 +441,33 @@ public class Simulator {
 				dn.removeBlock(id);
 			}
 		}
+		
+		for (int i = 0; i < idlist.size(); i++) {
+			Block block = new BlockInfo(idlist.get(i));
 
-		//distribute blocks with id in idlist in cold zone
+			for (int j = 0; j < numberofReplicas; j++) {
+				int idDatanode = currentDN;
+				Datanode dn = allDatanodes.getNode(idDatanode);
+				dn.addBlock(block);
+				if(dn.getType() == 1) {
+					power.totalPower += power.writeSsd;
+				}
+				else {
+					power.totalPower += power.writeHdd;
+				}
+				namenode.initAddBlock(idDatanode, (BlockInfo)block);
+				if(numberofSSDs == 0){
+					currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1;
+
+				}
+				else {
+					currentDN = (currentDN == numberofDatanodes-1)? numberofSSDs: currentDN+1;
+				}
+
+
+			}
+
+		}
 	}
 
 
