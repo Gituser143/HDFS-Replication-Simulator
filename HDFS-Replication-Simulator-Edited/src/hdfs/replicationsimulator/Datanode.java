@@ -1,6 +1,7 @@
 package hdfs.replicationsimulator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -69,7 +70,18 @@ public class Datanode extends Node {
 		blocks.add(block);
 	}
 
-	public void removeBlock(int id) { blocks.remove(id); }
+	public void removeBlock(int id) {
+		List<Block> blocks = this.blocks;
+		Iterator itr = blocks.iterator();
+		while (itr.hasNext())
+		{
+			Block currentBlock = (Block) itr.next();
+			if(currentBlock.getId() == id)
+			{
+				itr.remove();
+			}
+		}
+	}
 
 	boolean hasFailed(){
 		return failed;

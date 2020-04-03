@@ -1,4 +1,4 @@
-replica=2
+replica=3
 bw=1024
 block=128
 heartbeat=2000

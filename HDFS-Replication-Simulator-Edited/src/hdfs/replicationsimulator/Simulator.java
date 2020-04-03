@@ -5,11 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /*
@@ -407,8 +403,46 @@ public class Simulator {
 	}
 
 	public static void moveBlocks(){
-		Datanode dn = allDatanodes.getNode(0);
-		dn.removeBlock(1);
+		int threshold = 3;
+		Power power = new Power();
+		int currentDN = numberofSSDs;
+		List<Integer> idlist = new ArrayList<>();
+
+		for(int i = 0; i < numberofSSDs; i++) {
+			Datanode dn = allDatanodes.getNode(i);
+			List<Block> blocks = dn.getBlocks();
+
+			for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				Block block = blocks.get(blockIndex);
+
+				int id = block.getId();
+				boolean flag = true;
+
+				Iterator itr = idlist.iterator();
+				while (itr.hasNext())
+				{
+					int x = (Integer)itr.next();
+					if (x == id)
+						flag = false;
+				}
+
+				if(block.getLastAccessed() > threshold & flag) {
+					idlist.add(id);
+				}
+			}
+		}
+
+		for (int i = 0; i < numberofSSDs; i++) {
+			Datanode dn = allDatanodes.getNode(i);
+			Iterator itr = idlist.iterator();
+			while (itr.hasNext())
+			{
+				int id = (Integer)itr.next();
+				dn.removeBlock(id);
+			}
+		}
+
+		//distribute blocks with id in idlist in cold zone
 	}
 
 
