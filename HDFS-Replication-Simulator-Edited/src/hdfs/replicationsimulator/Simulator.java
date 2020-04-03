@@ -34,6 +34,7 @@ public class Simulator {
 	private static int timeout = 3;
 	private static int blockSize = 64;
 	private static int numberofSSDs = 64;
+	private static int threshold = 5;
 	private static int blockPercentage = 50; //Percentage of blocks to go cold
 	private static List<Event> simulationFailureEvents;
 
@@ -63,6 +64,8 @@ public class Simulator {
 					numberofDatanodes = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("bw=")) {
 					bandwidth = Integer.parseInt(data.split("=")[1]);
+				} else if (data.contains("threshold=")) {
+					threshold = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("heartbeat=")) {
 					heartbeat = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("timeout=")) {
@@ -412,7 +415,7 @@ public class Simulator {
 
 	public static void moveBlocks(){
 		if(numberofSSDs != numberofDatanodes) {
-			int threshold = 3;
+			//int threshold = 3;
 			Power power = new Power();
 			int currentDN = numberofSSDs;
 			List<Integer> idlist = new ArrayList<>();
@@ -479,7 +482,7 @@ public class Simulator {
 					}
 				}
 			}
-			
+
 			System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
 		}
 
