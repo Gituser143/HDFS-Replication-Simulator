@@ -32,6 +32,9 @@ public class Main {
 		//Simulator.printLastAccessed();
 		Simulator.moveBlocks();
 		//Simulator.printLastAccessed();
+
+		System.out.println("Total power consumed = " + Simulator.getTotalPower());
+
 		System.out.println("END");
 		
 		Simulator.printResults();

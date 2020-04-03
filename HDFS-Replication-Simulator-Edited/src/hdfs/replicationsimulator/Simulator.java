@@ -35,6 +35,7 @@ public class Simulator {
 	private static int blockSize = 64;
 	private static int numberofSSDs = 64;
 	private static int threshold = 5;
+	private static int totalPower = 0;
 	private static int blockPercentage = 50; //Percentage of blocks to go cold
 	private static List<Event> simulationFailureEvents;
 
@@ -152,6 +153,9 @@ public class Simulator {
 		System.out.print(numberofDatanodes + " Datanodes Created.\n");
 	}
 
+	public static int getTotalPower() {
+		return totalPower;
+	}
 	private static void initializeBlocks() {
 		int currentDN = 0;
 		Power power = new Power();
@@ -203,6 +207,7 @@ public class Simulator {
 		}
 		System.out.print(numberofBlocks + " Blocks distributed\n\n\n");
 		System.out.print(power.totalPower + " Watts of Power consumed for Initialization\n");
+		totalPower += power.totalPower;
 	}
 
 	public static void start() {
@@ -410,7 +415,8 @@ public class Simulator {
 
 		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
 		System.out.print(power2.totalPower + " Watts of Power consumed for running the cluster\n");
-
+		totalPower += power.totalPower;
+		totalPower += power2.totalPower;
 	}
 
 	public static void moveBlocks(){
@@ -484,6 +490,7 @@ public class Simulator {
 			}
 
 			System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
+			totalPower += power.totalPower;
 		}
 
 	}
