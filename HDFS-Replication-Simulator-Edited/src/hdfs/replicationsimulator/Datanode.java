@@ -68,7 +68,9 @@ public class Datanode extends Node {
 	public void addBlock(Block block){
 		blocks.add(block);
 	}
-	
+
+	public void removeBlock(int id) { blocks.remove(id); }
+
 	boolean hasFailed(){
 		return failed;
 	}

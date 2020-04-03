@@ -1,9 +1,9 @@
-replica=3
+replica=2
 bw=1024
 block=128
 heartbeat=2000
 timeout=3
 nodes=5
-nBlocks=10
+nBlocks=5
 HZpercent=40
 coldPercent=80

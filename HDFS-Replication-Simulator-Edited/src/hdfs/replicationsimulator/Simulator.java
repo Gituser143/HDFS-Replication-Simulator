@@ -310,6 +310,19 @@ public class Simulator {
 		return allDatanodes;
 	}
 
+	public static void printTimesAccessed() {
+		for (int i = 0; i < numberofDatanodes; i++) {
+			Datanode dn = allDatanodes.getNode(i);
+			List<Block> blocks = dn.getBlocks();
+			System.out.println("Datanode : " + i);
+			for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+				Block block = blocks.get(blockIndex);
+				System.out.println("Number of times block accessed. Block id : " + block.getId() + " : " + block.getTimesAccessed());
+
+			}
+		}
+	}
+
 	public static void printLastAccessed() {
 		for (int i = 0; i < numberofDatanodes; i++) {
 			Datanode dn = allDatanodes.getNode(i);
@@ -317,7 +330,7 @@ public class Simulator {
 			System.out.println("Datanode : " + i);
 			for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
 				Block block = blocks.get(blockIndex);
-				System.out.println("Number of times block accessed. Block id : " + block.getId() + ":" + block.getTimesAccessed());
+				System.out.println("Time since last access. Block id : " + block.getId() + " : " + block.getLastAccessed());
 
 			}
 		}
@@ -391,6 +404,11 @@ public class Simulator {
 		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
 		System.out.print(power2.totalPower + " Watts of Power consumed for running the cluster\n");
 
+	}
+
+	public static void moveBlocks(){
+		Datanode dn = allDatanodes.getNode(0);
+		dn.removeBlock(1);
 	}
 
 

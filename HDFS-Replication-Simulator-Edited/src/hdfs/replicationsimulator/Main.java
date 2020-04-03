@@ -33,7 +33,8 @@ public class Main {
 
 		Simulator.printLastAccessed();
 		//Simulator.transfer(hot to cold);
-
+		Simulator.moveBlocks();
+		Simulator.printLastAccessed();
 		System.out.println("END");
 		
 		Simulator.printResults();

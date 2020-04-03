@@ -4,7 +4,7 @@ public class Block {
 	
 	private int id;
 	//private double last_accessed;
-	private long lastAccessed = 0;
+	private long lastAccessed = 0; //Number of days since block was last accessed
 	private long timesAccessed = 0;
 	Block(int id) {
 		this.id = id;
