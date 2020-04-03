@@ -1,4 +1,7 @@
 package hdfs.replicationsimulator;
+
+import java.net.SocketImpl;
+
 /**
  * 
  * Launches the simulator
@@ -32,8 +35,8 @@ public class Main {
 		//Simulator.printLastAccessed();
 		Simulator.moveBlocks();
 		//Simulator.printLastAccessed();
-
-		System.out.println("Total power consumed = " + Simulator.getTotalPower());
+		Simulator.accessData();
+		System.out.println("\n\nTotal power consumed = " + Simulator.getTotalPower());
 
 		System.out.println("END");
 		

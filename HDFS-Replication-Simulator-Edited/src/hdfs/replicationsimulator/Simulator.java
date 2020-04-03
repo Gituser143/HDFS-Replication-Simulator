@@ -406,6 +406,7 @@ public class Simulator {
 								}
 
 								block2.changeTimesAccessed();
+								block2.access();
 							}
 						}
 					}
@@ -413,7 +414,7 @@ public class Simulator {
 			}
 		}
 
-		System.out.print(power.totalPower + " Watts of Power consumed for Block access\n");
+		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access\n");
 		System.out.print(power2.totalPower + " Watts of Power consumed for running the cluster\n");
 		totalPower += power.totalPower;
 		totalPower += power2.totalPower;
@@ -494,20 +495,56 @@ public class Simulator {
 		}
 
 	}
+
 	public static void accessData(){
 		Power power = new Power();
-		int i;
-		for(i=0;i<numberofSSDs;i++){
-			Datanode dn = allDatanodes.getNode(i);
-			List<Block> blocks = dn.getBlocks();
-			for (int blockIndex=0;blockIndex< blocks.size();blockIndex++){
-				Block block = blocks.get(blockIndex);
-				block.changeTimesAccessed();
-				block.access();
-				power.totalPower+=power.readSsd;
-				power.totalPower+=power.ssdActive;
+		if(numberofSSDs != 0) {
+			for(int i = 0; i < numberofSSDs; i++){
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
+				for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++){
+					Block block = blocks.get(blockIndex);
+					block.changeTimesAccessed();
+					block.access();
+					power.totalPower += power.readSsd;
+					power.totalPower += power.ssdActive;
+				}
+			}
+
+			int percent = (5 * numberofBlocks) / 100;
+			for(int i = numberofSSDs; (i < numberofDatanodes) && (percent != 0); i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
+				for(int blockIndex = 0; (blockIndex < blocks.size()) && (percent != 0); blockIndex ++, percent--) {
+					Block block = blocks.get(blockIndex);
+					block.access();
+					block.changeTimesAccessed();
+					power.totalPower += power.readHdd;
+					power.totalPower += power.hddActive;
+				}
+			}
+
+			for(int i = numberofSSDs; i < numberofDatanodes; i++) {
+				power.totalPower += power.hddSleep;
 			}
 		}
+		else {
+			for(int i = 0; i < numberofDatanodes; i++){
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
+				for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++){
+					Block block = blocks.get(blockIndex);
+					block.changeTimesAccessed();
+					block.access();
+					power.totalPower += power.readHdd;
+					power.totalPower += power.hddActive;
+				}
+			}
+
+		}
+		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access");
+		totalPower += power.totalPower;
+
 	}
 }
 
