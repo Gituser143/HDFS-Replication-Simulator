@@ -29,12 +29,8 @@ public class Main {
 		Thread.sleep(sleepTime);
 		Simulator.makeCold();
 
-		//TODO TRANSFER FROM HOT TO COLD
-
 		//Simulator.printLastAccessed();
-		//Simulator.transfer(hot to cold);
 		Simulator.moveBlocks();
-		//System.out.println("\n\nNEW\n\n");
 		//Simulator.printLastAccessed();
 		System.out.println("END");
 		
