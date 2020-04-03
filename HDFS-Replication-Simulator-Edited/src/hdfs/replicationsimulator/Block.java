@@ -15,7 +15,10 @@ public class Block {
 	}
 	//double getLast_accessed() {	return this.last_accessed; }
 
-	public void access() { this.lastAccessed = 0; }
+	public void access() {
+		this.lastAccessed = 0;
+		this.timesAccessed += 1;
+	}
 
 	public void changeLastAccess() {
 		this.lastAccessed += 1;
@@ -25,9 +28,6 @@ public class Block {
 		return this.lastAccessed;
 	}
 
-	public void changeTimesAccessed(){
-		this.timesAccessed += 1;
-	}
 	public long getTimesAccessed() {
 		return this.timesAccessed;
 	}
