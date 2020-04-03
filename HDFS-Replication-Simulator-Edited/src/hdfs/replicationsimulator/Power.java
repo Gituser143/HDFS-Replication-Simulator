@@ -11,6 +11,8 @@ public class Power {
   public int hddActive;
   public int hddSleep;
 
+  public int hddTransition;
+
   public int totalPower;
 
   public Power()
@@ -24,6 +26,8 @@ public class Power {
     this.ssdActive = 8;
     this.hddActive = 17;
     this.hddSleep = 1;
+
+    this.hddTransition = 10;
 
     this.totalPower = 0;
   }

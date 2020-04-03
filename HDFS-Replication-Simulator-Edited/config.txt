@@ -1,9 +1,10 @@
-replica=2
+replica_hot_zone=3
+replica_cold_zone=2
 bw=1024
 block=128
 heartbeat=2000
 timeout=3
-nodes=5
-nBlocks=5
-HZpercent=40
+nodes=50
+nBlocks=500
+HZpercent=0
 coldPercent=80

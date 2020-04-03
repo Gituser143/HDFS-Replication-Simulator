@@ -25,7 +25,8 @@ public class Simulator {
 	 * Settings (defaults)
 	 */
 	private static int numberofBlocks = 75000;
-	private static int numberofReplicas = 3;
+	private static int numberofReplicasHot = 3;
+	private static int numberofReplicasCold = 2;
 	private static int numberofDatanodes = 10000;
 	private static int dataNodeCapacity = 320000;
 	private static int bandwidth = 1024;
@@ -54,8 +55,10 @@ public class Simulator {
 
 			while ((data = in.readLine()) != null) {
 
-				if (data.contains("replica=")) {
-					numberofReplicas = Integer.parseInt(data.split("=")[1]);
+				if (data.contains("replica_hot_zone=")) {
+					numberofReplicasHot = Integer.parseInt(data.split("=")[1]);
+				} else if (data.contains("replica_cold_zone=")) {
+					numberofReplicasCold = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("nodes=")) {
 					numberofDatanodes = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("bw=")) {
@@ -170,16 +173,18 @@ public class Simulator {
 			*/
 			//adds the blocks to a node (chained mode)
 
-			for (int j = 0; j < numberofReplicas; j++) {
+			for (int j = 0; j < numberofReplicasHot; j++) {
 				int idDatanode = currentDN;
 				//int index = idDatanode - 1;
 				Datanode dn = allDatanodes.getNode(idDatanode);
 				dn.addBlock(block);
 				if(dn.getType() == 1) {
 					power.totalPower += power.writeSsd;
+					power.totalPower += power.ssdActive;
 				}
 				else {
 					power.totalPower += power.writeHdd;
+					power.totalPower += power.hddActive;
 				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
 				if(numberofSSDs == 0){
@@ -220,7 +225,7 @@ public class Simulator {
 	}
 	
 	public static int getNumberofReplicas() {
-		return numberofReplicas;
+		return numberofReplicasHot;
 	}
 
 	public static Queue<Event> getToNamenode() {
@@ -341,18 +346,7 @@ public class Simulator {
 		for(int i = 0; i < numberofDatanodes; i++){
 			Datanode dn = allDatanodes.getNode(i);
 
-			if(dn.getType() == 1) {
-				power2.totalPower += power2.ssdActive;
-			}
-			else {
-				if(numberofSSDs == 0) {
-					power2.totalPower += power2.hddActive;
-				}
-				else{
-					power2.totalPower += power2.hddSleep;
-				}
 
-			}
 
 			List<Block> blocks = dn.getBlocks();
 			int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
@@ -369,6 +363,18 @@ public class Simulator {
 							Block block2 = blocks2.get(blockIndex2);
 							if (block.getId() == block2.getId()) {
 								block2.changeLastAccess();
+								if(dn.getType() == 1) {
+									power2.totalPower += power2.ssdActive;
+								}
+								else {
+									if(numberofSSDs == 0) {
+										power2.totalPower += power2.hddActive;
+									}
+									else{
+										power2.totalPower += power2.hddSleep;
+									}
+
+								}
 							}
 						}
 					}
@@ -384,9 +390,11 @@ public class Simulator {
 							if(block.getId() == block2.getId()){
 								if(dn2.getType() == 1){
 									power.totalPower += power.readSsd;
+									power.totalPower += power.ssdActive;
 								}
 								else {
 									power.totalPower += power.readHdd;
+									power.totalPower += power.hddActive;
 								}
 
 								block2.changeTimesAccessed();
@@ -408,6 +416,7 @@ public class Simulator {
 		int currentDN = numberofSSDs;
 		List<Integer> idlist = new ArrayList<>();
 
+		//Get list of blocks that are cold
 		for(int i = 0; i < numberofSSDs; i++) {
 			Datanode dn = allDatanodes.getNode(i);
 			List<Block> blocks = dn.getBlocks();
@@ -432,6 +441,7 @@ public class Simulator {
 			}
 		}
 
+		//Remove list of blocks from hot zone
 		for (int i = 0; i < numberofSSDs; i++) {
 			Datanode dn = allDatanodes.getNode(i);
 			Iterator itr = idlist.iterator();
@@ -441,19 +451,22 @@ public class Simulator {
 				dn.removeBlock(id);
 			}
 		}
-		
+
+		//Duplicate blocks within cold zone
 		for (int i = 0; i < idlist.size(); i++) {
 			Block block = new BlockInfo(idlist.get(i));
 
-			for (int j = 0; j < numberofReplicas; j++) {
+			for (int j = 0; j < numberofReplicasCold; j++) {
 				int idDatanode = currentDN;
 				Datanode dn = allDatanodes.getNode(idDatanode);
 				dn.addBlock(block);
 				if(dn.getType() == 1) {
 					power.totalPower += power.writeSsd;
+					power.totalPower += power.ssdActive;
 				}
 				else {
 					power.totalPower += power.writeHdd;
+					power.totalPower += power.hddActive;
 				}
 				namenode.initAddBlock(idDatanode, (BlockInfo)block);
 				if(numberofSSDs == 0){
@@ -463,13 +476,9 @@ public class Simulator {
 				else {
 					currentDN = (currentDN == numberofDatanodes-1)? numberofSSDs: currentDN+1;
 				}
-
-
 			}
-
 		}
+		System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
 	}
-
-
 }
 
