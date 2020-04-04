@@ -73,7 +73,7 @@ public class Simulator {
 					timeout = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("block=")) {
 					blockSize = Integer.parseInt(data.split("=")[1]);
-				} else if (data.contains("coldPercent=")) {
+				} else if (data.contains("Simulated_percentage_of_data_going_cold=")) {
 					blockPercentage = Integer.parseInt(data.split("=")[1]);
 				} else if (data.contains("nBlocks=")) {
 					numberofBlocks = Integer.parseInt(data.split("=")[1]);
@@ -130,32 +130,53 @@ public class Simulator {
 	private static void initializeDatanodes() {
 
 		// Create all the datanodes
+		Power power = new Power();
 		allDatanodes = new AllDatanode();
 		//int numberofSSDs = numberofDatanodes/3;
-		for (int i = 0; i < numberofSSDs; i++) {
-			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 1));
+		if(numberofSSDs == 0) {
+			//power.totalPower += power.hddActive * numberofDatanodes;
+			for (int i = numberofSSDs; i < numberofDatanodes; i++) {
+				allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
 
-			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 1);
-			namenode.addNode(datanodeInfo);
-			System.out.println("Created SSD with ID " + i);
+				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
+				namenode.addNode(datanodeInfo);
+				System.out.println("Created HDD with ID " + i);
+				power.totalPower += power.hddActive;
 
+			}
+		}
+		else {
+			for (int i = 0; i < numberofSSDs; i++) {
+				allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 1));
+
+				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 1);
+				namenode.addNode(datanodeInfo);
+				//System.out.println("Created SSD with ID " + i);
+				power.totalPower += power.ssdActive;
+			}
+
+			for (int i = numberofSSDs; i < numberofDatanodes; i++) {
+				allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
+
+				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
+				namenode.addNode(datanodeInfo);
+				//System.out.println("Created HDD with ID " + i);
+				power.totalPower += power.hddSleep;
+
+			}
 		}
 
-		for (int i = numberofSSDs; i < numberofDatanodes; i++) {
-			allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
+		System.out.println(numberofSSDs + " SSD Datanodes Created.");
+		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created\n");
+		System.out.println(power.totalPower + " Watts of Power consumed for bringing up " + numberofDatanodes + " Nodes");
+		totalPower += power.totalPower;
 
-			DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
-			namenode.addNode(datanodeInfo);
-			System.out.println("Created HDD with ID " + i);
-
-		}
-
-		System.out.print(numberofDatanodes + " Datanodes Created.\n");
 	}
 
 	public static int getTotalPower() {
 		return totalPower;
 	}
+
 	private static void initializeBlocks() {
 		int currentDN = 0;
 		Power power = new Power();
@@ -205,8 +226,8 @@ public class Simulator {
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}
-		System.out.print(numberofBlocks + " Blocks distributed\n\n\n");
-		System.out.print(power.totalPower + " Watts of Power consumed for Initialization\n");
+		//System.out.print(numberofBlocks + " Blocks distributed\n\n\n");
+		System.out.print(power.totalPower + " Watts of Power consumed for initial block distribution (First write)\n");
 		totalPower += power.totalPower;
 	}
 
@@ -413,8 +434,8 @@ public class Simulator {
 			}
 		}
 
-		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access\n");
-		System.out.print(power2.totalPower + " Watts of Power consumed for running the cluster\n");
+		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access (First Read of hot data)\n");
+		System.out.print(power2.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)\n");
 		totalPower += power.totalPower;
 		totalPower += power2.totalPower;
 	}
@@ -489,7 +510,7 @@ public class Simulator {
 				}
 			}
 
-			System.out.println(power.totalPower + " Watts of Power consumed when transferring to cold zone");
+			System.out.println(power.totalPower + " Watts of Power consumed when transferring data to cold zone");
 			totalPower += power.totalPower;
 		}
 
@@ -518,6 +539,7 @@ public class Simulator {
 					block.access();
 					power.totalPower += power.readHdd;
 					power.totalPower += power.hddActive;
+					power.totalPower += power.hddTransition;
 				}
 			}
 
@@ -538,7 +560,7 @@ public class Simulator {
 			}
 
 		}
-		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access");
+		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access (Regular reading of hot data)");
 		totalPower += power.totalPower;
 
 	}
