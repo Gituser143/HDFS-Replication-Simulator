@@ -22,9 +22,13 @@ public class Main {
 		FileOutputStream fp=new FileOutputStream("data.txt",true);
 		System.setOut(new PrintStream(fp));
 
+		Power power = new Power();
+		power.totalPower=0;
+
 		//for running the simulator a lot of times
 		//delete for loop  to run it once
 		for(int i = 0;i<100;i++) {
+			power.totalPower=0;
 			System.out.println("iteration : " + i);
 			int a[] = {-1, -1, -1, -1, -1, -1, -1, -1, i, -1, -1};
 			changeConfig(a);
@@ -34,11 +38,12 @@ public class Main {
 				configFile = "config.txt";
 			} else {
 				configFile = args[0];
+
 			}
 			Simulator.init(configFile);
 			Simulator.start();
 
-			int sleepTime = 2000;
+			int sleepTime = 1;
 
 			Thread.sleep(sleepTime);
 			Simulator.makeCold();
@@ -48,7 +53,8 @@ public class Main {
 			//Simulator.printLastAccessed();
 			Simulator.accessData();
 			System.out.println("\n\nTotal power consumed = " + Simulator.getTotalPower());
-
+			//Power power = new Power();
+			power.totalPower=0;
 			System.out.println("END\n");
 
 			Simulator.printResults();
@@ -57,6 +63,8 @@ public class Main {
 
 	//this is to change the config file
 	public static void changeConfig(int confargs[]) throws IOException {
+		Power power = new Power();
+		power.totalPower=0;
 		/* the arguments are as follows in confargs, -1 to provide default args as in the config_old file
 		0	replica_hot_zone
 		1	replica_cold_zone
@@ -70,7 +78,7 @@ public class Main {
 		9	Simulated_percentage_of_data_going_cold
 		10	threshold
 		 */
-		int defaultargs[] = {3,2,1024,128,2000,3,100,500,30,80,5};
+		int defaultargs[] = {3,2,1024,128,2000,3,100,5000,30,80,5};
 
 		for(int i = 0;i<confargs.length;i++){
 			if(confargs[i] == -1){

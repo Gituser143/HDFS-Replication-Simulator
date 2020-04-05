@@ -28,7 +28,7 @@ public class Simulator {
 	private static int numberofReplicasHot = 3;
 	private static int numberofReplicasCold = 2;
 	private static int numberofDatanodes = 10000;
-	private static int dataNodeCapacity = 320000;
+	private static int dataNodeCapacity = 32;
 	private static int bandwidth = 1024;
 	private static int heartbeat = 1000;
 	private static int timeout = 3;
@@ -174,7 +174,9 @@ public class Simulator {
 	}
 
 	public static int getTotalPower() {
-		return totalPower;
+		int x = totalPower;
+		totalPower=0;
+		return x;
 	}
 
 	private static void initializeBlocks() {
@@ -232,6 +234,8 @@ public class Simulator {
 	}
 
 	public static void start() {
+		Power power = new Power();
+		power.totalPower=0;
 		allDatanodes.start();
 		namenode.start();
 		startFailure();
@@ -390,9 +394,11 @@ public class Simulator {
 
 						for (int blockIndex2 = 0; blockIndex2 < blocks2.size(); blockIndex2++) {
 							Block block2 = blocks2.get(blockIndex2);
+
 							if (block.getId() == block2.getId()) {
 								block2.changeLastAccess();
 								if(dn.getType() == 1) {
+
 									power2.totalPower += power2.ssdActive;
 								}
 								else {
