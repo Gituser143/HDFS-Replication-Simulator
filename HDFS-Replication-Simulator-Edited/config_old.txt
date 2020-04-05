@@ -6,6 +6,6 @@ heartbeat=2000
 timeout=3
 nodes=100
 nBlocks=500
-HZpercent=99
+HZpercent=30
 Simulated_percentage_of_data_going_cold=80
 threshold=5

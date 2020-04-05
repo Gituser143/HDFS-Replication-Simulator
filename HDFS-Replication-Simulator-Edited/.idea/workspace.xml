@@ -10,6 +10,9 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="189" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -39,9 +42,14 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="11.0.6" />
+      <option name="ALTERNATIVE_JRE_PATH" value="13" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="hdfs.replicationsimulator.Main" />
       <module name="HDFS Replication Simulator" />
@@ -102,24 +110,24 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="555" y="201" width="800" height="675" key="#Plugins/0.0.1920.1080@0.0.1920.1080" timestamp="1581832779464" />
-    <state x="322" y="165" width="835" height="540" key="#Project_Structure" timestamp="1585933264542">
+    <state x="322" y="165" width="835" height="540" key="#Project_Structure" timestamp="1586083638914">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="453" y="201" width="1105" height="678" key="#Project_Structure/0.0.1920.1080@0.0.1920.1080" timestamp="1584947888212" />
-    <state x="322" y="165" width="835" height="540" key="#Project_Structure/0.27.1366.741@0.27.1366.741" timestamp="1585933264542" />
+    <state x="322" y="165" width="835" height="540" key="#Project_Structure/0.27.1366.741@0.27.1366.741" timestamp="1586083638914" />
     <state x="550" y="201" width="800" height="675" key="#Updates" timestamp="1583652941640">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="550" y="201" width="800" height="675" key="#Updates/0.0.1920.1080@0.0.1920.1080" timestamp="1583652941640" />
-    <state x="198" y="41" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585934665034">
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586083630964">
+      <screen x="0" y="27" width="1366" height="741" />
+    </state>
+    <state x="198" y="41" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1586078073587" />
+    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.741@0.27.1366.741" timestamp="1586083630964" />
+    <state x="792" y="432" width="326" height="224" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1586078017789">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="198" y="41" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1585934665034" />
-    <state x="141" y="55" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.741@0.27.1366.741" timestamp="1585933251672" />
-    <state x="792" y="432" width="326" height="224" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585934530240">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="792" y="432" width="326" height="224" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1585934530240" />
+    <state x="792" y="432" width="326" height="224" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1586078017789" />
     <state x="643" y="265" width="624" height="548" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1583652943365">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -128,26 +136,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="731" y="298" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1585810842561" />
-    <state width="1920" height="398" key="GridCell.Tab.0.bottom" timestamp="1585983975313">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1320" height="69" key="GridCell.Tab.0.bottom" timestamp="1586083644436">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1920" height="398" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1585983975313" />
-    <state width="1320" height="348" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1585933281564" />
-    <state width="1920" height="398" key="GridCell.Tab.0.center" timestamp="1585983975313">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1878" height="288" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
+    <state width="1320" height="69" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
+    <state width="1320" height="69" key="GridCell.Tab.0.center" timestamp="1586083644436">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1920" height="398" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1585983975313" />
-    <state width="1320" height="348" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1585933281559" />
-    <state width="1920" height="398" key="GridCell.Tab.0.left" timestamp="1585983975313">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1878" height="288" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
+    <state width="1320" height="69" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
+    <state width="1320" height="69" key="GridCell.Tab.0.left" timestamp="1586083644435">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1920" height="398" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1585983975313" />
-    <state width="1320" height="348" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1585933281557" />
-    <state width="1920" height="398" key="GridCell.Tab.0.right" timestamp="1585983975313">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state width="1878" height="288" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134264" />
+    <state width="1320" height="69" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1586083644435" />
+    <state width="1320" height="69" key="GridCell.Tab.0.right" timestamp="1586083644436">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1920" height="398" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1585983975313" />
-    <state width="1320" height="348" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1585933281562" />
+    <state width="1878" height="288" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
+    <state width="1320" height="69" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
     <state width="1920" height="369" key="GridCell.Tab.1.bottom" timestamp="1585851924261">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -186,7 +194,7 @@
     <state x="616" y="239" width="686" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1585980974810" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HDFS_Replication_Simulator$Main.ic" NAME="Main Coverage Results" MODIFIED="1585933272965" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/HDFS_Replication_Simulator$Main.ic" NAME="Main Coverage Results" MODIFIED="1586083644422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>hdfs.replicationsimulator.*</FILTER>
     </SUITE>
   </component>
