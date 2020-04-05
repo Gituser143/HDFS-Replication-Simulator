@@ -24,9 +24,9 @@ public class Main {
 
 		//for running the simulator a lot of times
 		//delete for loop  to run it once
-		for(int i = 0;i<10;i++) {
+		for(int i = 0;i<100;i++) {
 			System.out.println("iteration : " + i);
-			int a[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+			int a[] = {-1, -1, -1, -1, -1, -1, -1, -1, i, -1, -1};
 			changeConfig(a);
 
 			String configFile;
@@ -49,7 +49,7 @@ public class Main {
 			Simulator.accessData();
 			System.out.println("\n\nTotal power consumed = " + Simulator.getTotalPower());
 
-			System.out.println("END");
+			System.out.println("END\n");
 
 			Simulator.printResults();
 		}
