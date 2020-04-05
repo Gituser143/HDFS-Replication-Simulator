@@ -27,13 +27,17 @@ public class Main {
 		Simulator.init(configFile);
 		Simulator.start();
 
-		int sleepTime = 2000;
+		int sleepTime = 1000;
 
 		Thread.sleep(sleepTime);
 		Simulator.makeCold();
 
+
 		//Simulator.printLastAccessed();
 		Simulator.moveBlocks();
+		//Simulator.printLastAccessed();
+		Simulator.balance();
+		//System.out.println("NEW\n\n\n");
 		//Simulator.printLastAccessed();
 		Simulator.accessData();
 		System.out.println("\n\nTotal power consumed = " + Simulator.getTotalPower());

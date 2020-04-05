@@ -99,8 +99,12 @@ public class Simulator {
 				}
 				numberofSSDs = (fraction * numberofDatanodes)/100;
 			}
-			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity) * numberofReplicasHot;
+			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity * numberofReplicasHot);
 			//System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
+			if(requiredNumberOfSsd > numberofSSDs && numberofSSDs != 0) {
+				System.out.println("Cannot Simulate. Blocks exceed Hot Zone capacity.");
+				System.exit(1);
+			}
 
 
 		} catch (IOException e) {
@@ -122,6 +126,7 @@ public class Simulator {
 	public static int getCapacity() {
 		return dataNodeCapacity;
 	}
+
 	private static void startFailure() {
 		
 		Thread killer = new Thread(new NodeKiller());
@@ -177,7 +182,7 @@ public class Simulator {
 				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
 				namenode.addNode(datanodeInfo);
 				//System.out.println("Created HDD with ID " + i);
-				power.totalPower += power.hddSleep;
+				power.totalPower += power.bootHdd;
 
 			}
 
@@ -200,8 +205,11 @@ public class Simulator {
 		}
 
 		System.out.println(numberofSSDs + " SSD Datanodes Created.");
-		System.out.println(requiredNumberOfSsd + " SSD Datanodes Active.");
-		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created.\n");
+		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created.");
+
+		if(numberofSSDs != 0 ) { System.out.println(requiredNumberOfSsd + " SSD Datanodes Active.\n"); }
+		else {System.out.println("\n");}
+
 		System.out.println(power.totalPower + " Watts of Power consumed for bringing up " + numberofDatanodes + " Nodes");
 		totalPower += power.totalPower;
 
@@ -436,21 +444,22 @@ public class Simulator {
 		Power power2 = new Power();
 		//int blockPercentage = 50; //percentage of blocks to turn cold
 
+
 		for(int i = 0; i < numberofDatanodes; i++){
 			Datanode dn = allDatanodes.getNode(i);
 
-			if(dn.getType() == 1 && !dn.getState()) {
-				power2.totalPower += power2.ssdSleep;
-			}
-			else if(dn.getType() == 1 && dn.getState()) {
-				power2.totalPower += power2.ssdActive;
-			}
-			else if(dn.getType() != 1 && dn.getState()) {
-				power2.totalPower += power2.hddActive;
-			}
-			else {
-				power2.totalPower += power2.hddSleep;
-			}
+//			if(dn.getType() == 1 && !dn.getState()) {
+//				power2.totalPower += power2.ssdSleep;
+//			}
+//			else if(dn.getType() == 1 && dn.getState()) {
+//				power2.totalPower += power2.ssdActive;
+//			}
+//			else if(dn.getType() != 1 && dn.getState()) {
+//				power2.totalPower += power2.hddActive;
+//			}
+//			else {
+//				power2.totalPower += power2.hddSleep;
+//			}
 
 			List<Block> blocks = dn.getBlocks();
 			int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
@@ -507,10 +516,16 @@ public class Simulator {
 			}
 		}
 
-		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access (First Read of hot data)\n");
-		System.out.print(power2.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)\n");
+		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access (First Read of data)\n");
+		measureClusterPower();
+//		Power power1 = new Power();
+//		power1.totalPower += requiredNumberOfSsd * power1.ssdActive;
+//		power1.totalPower += (numberofSSDs - requiredNumberOfSsd) * power1.ssdSleep;
+//		power1.totalPower += (numberofDatanodes - numberofSSDs) * power1.hddSleep;
+//		System.out.println(power1.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)");
+//		//		System.out.print(power2.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)\n");
 		totalPower += power.totalPower;
-		totalPower += power2.totalPower;
+//		totalPower += power1.totalPower;
 	}
 
 	public static void moveBlocks(){
@@ -587,6 +602,7 @@ public class Simulator {
 			totalPower += power.totalPower;
 
 			//Balance hot zone here
+
 		}
 
 	}
@@ -638,9 +654,170 @@ public class Simulator {
 			}
 
 		}
-		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access (Regular reading of hot data)");
+		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access (Regular reading of data)");
 		totalPower += power.totalPower;
 
 	}
+
+	public static void balance() {
+		Power power = new Power();
+		if(numberofSSDs != 0) {
+			List<Integer> idlist = new ArrayList<>();
+			int currentDN = 0;
+
+			//Get list of blocks in hot zone
+			for(int i = 0; i < requiredNumberOfSsd; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+					Block block = blocks.get(blockIndex);
+
+					int id = block.getId();
+					boolean flag = true;
+
+					Iterator itr = idlist.iterator();
+					while (itr.hasNext())
+					{
+						int x = (Integer)itr.next();
+						if (x == id)
+							flag = false;
+					}
+
+					if(flag) {
+						idlist.add(id);
+					}
+				}
+			}
+
+			int tempRequiredNumberOfSsd = (int) Math.ceil((double)idlist.size()/ dataNodeCapacity) * numberofReplicasHot;
+
+			if(tempRequiredNumberOfSsd != requiredNumberOfSsd) {
+				requiredNumberOfSsd = tempRequiredNumberOfSsd;
+				//Delete all blocks from hot zone
+				for (int i = 0; i < requiredNumberOfSsd; i++) {
+					Datanode dn = allDatanodes.getNode(i);
+					Iterator itr = idlist.iterator();
+					while (itr.hasNext())
+					{
+						int id = (Integer)itr.next();
+						dn.removeBlock(id);
+					}
+				}
+
+				//Distibute blocks across requiredSSDs
+				for (int i = 0; i < idlist.size(); i++) {
+					Block block = new BlockInfo(idlist.get(i));
+
+					for (int j = 0; j < numberofReplicasHot; j++) {
+						int idDatanode = currentDN;
+						Datanode dn = allDatanodes.getNode(idDatanode);
+						dn.addBlock(block);
+						if(dn.getType() == 1) {
+							power.totalPower += power.readSsd;
+							power.totalPower += power.writeSsd;
+						}
+						else {
+							power.totalPower += power.readHdd;
+							power.totalPower += power.writeHdd;
+						}
+						namenode.initAddBlock(idDatanode, (BlockInfo)block);
+						if(numberofSSDs == 0){
+							currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1;
+
+						}
+						else {
+							currentDN = (currentDN == requiredNumberOfSsd-1)? 0: currentDN+1;
+						}
+					}
+				}
+
+				for (int i = requiredNumberOfSsd; i < numberofSSDs; i++) {
+					Datanode dn = allDatanodes.getNode(i);
+					dn.setState(0);
+				}
+			}
+
+		}
+		else {
+			List<Integer> idlist = new ArrayList<>();
+			int currentDN = 0;
+
+			for(int i = 0; i < numberofDatanodes; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				List<Block> blocks = dn.getBlocks();
+				for(int blockIndex = 0; blockIndex < blocks.size(); blockIndex++) {
+					Block block = blocks.get(blockIndex);
+
+					int id = block.getId();
+					boolean flag = true;
+
+					Iterator itr = idlist.iterator();
+					while (itr.hasNext())
+					{
+						int x = (Integer)itr.next();
+						if (x == id)
+							flag = false;
+					}
+
+					if(flag) {
+						idlist.add(id);
+					}
+				}
+			}
+
+			for (int i = 0; i < numberofDatanodes; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				Iterator itr = idlist.iterator();
+				while (itr.hasNext())
+				{
+					int id = (Integer)itr.next();
+					dn.removeBlock(id);
+				}
+			}
+
+			for (int i = 0; i < idlist.size(); i++) {
+				Block block = new BlockInfo(idlist.get(i));
+
+				for (int j = 0; j < numberofReplicasCold; j++) {
+					int idDatanode = currentDN;
+					Datanode dn = allDatanodes.getNode(idDatanode);
+					dn.addBlock(block);
+					if(dn.getType() == 1) {
+						power.totalPower += power.readSsd;
+						power.totalPower += power.writeSsd;
+					}
+					else {
+						power.totalPower += power.readHdd;
+						power.totalPower += power.writeHdd;
+					}
+					namenode.initAddBlock(idDatanode, (BlockInfo)block);
+					if(numberofSSDs == 0){
+						currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1;
+
+					}
+					else {
+						currentDN = (currentDN == requiredNumberOfSsd-1)? 0: currentDN+1;
+					}
+				}
+			}
+
+
+		}
+
+
+		System.out.println(power.totalPower + " Watts of Power consumed for block balancing");
+		totalPower += power.totalPower;
+		measureClusterPower();
+	}
+
+	public static void measureClusterPower() {
+		Power power1 = new Power();
+		power1.totalPower += requiredNumberOfSsd * power1.ssdActive;
+		power1.totalPower += (numberofSSDs - requiredNumberOfSsd) * power1.ssdSleep;
+		power1.totalPower += (numberofDatanodes - numberofSSDs) * power1.hddSleep;
+		System.out.println(power1.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)");
+		totalPower += power1.totalPower;
+	}
+
 }
 

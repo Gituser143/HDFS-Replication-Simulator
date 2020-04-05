@@ -94,6 +94,7 @@ public class Datanode extends Node {
 				itr.remove();
 			}
 		}
+		this.freeSpace += 1;
 	}
 
 	boolean hasFailed(){

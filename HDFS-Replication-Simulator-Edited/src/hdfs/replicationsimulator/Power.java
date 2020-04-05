@@ -25,21 +25,21 @@ public class Power {
   {
 
     this.bootHdd = 7;
-    this.bootSsd = 4;
+    this.bootSsd = 4; //4
 
     this.readHdd = 6;
     this.writeHdd = 6;
 
-    this.readSsd = 2;
-    this.writeSsd = 2;
+    this.readSsd = 2; //2
+    this.writeSsd = 2; //2
 
-    this.ssdActive = 8;
-    this.hddActive = 17;
+    this.ssdActive = 8; //8
+    this.hddActive = 17; //17
 
-    this.hddSleep = 2;
-    this.ssdSleep = 1;
+    this.hddSleep = 2; //2
+    this.ssdSleep = 1; //1
 
-    this.hddTransition = 5;
+    this.hddTransition = 5; //5
 
     this.totalPower = 0;
   }
