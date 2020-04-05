@@ -24,6 +24,8 @@ public class Datanode extends Node {
 	private int type;
 
 	private int freeSpace;
+
+	private boolean active;
 	/* 
 	 * Status
 	 */
@@ -45,6 +47,7 @@ public class Datanode extends Node {
 		this.pendingBlocks = new ConcurrentLinkedQueue<Block>();
 		this.type = type; // 1 for SSD 0 for HDD
 		this.freeSpace = Simulator.getCapacity();
+		this.active = false;
 	}
 	
 	int getId(){
@@ -54,6 +57,8 @@ public class Datanode extends Node {
 		return this.type;
 	}
 	int getFreeSpace() { return this.freeSpace; }
+	boolean getState() {return this.active; }
+
 	
 	/**
 	 * Adds a command to the FIFO queue of the NameNode
@@ -74,6 +79,10 @@ public class Datanode extends Node {
 		this.freeSpace -= 1;
 	}
 
+	public void setState(int i) {
+		this.active = i == 1;
+
+	}
 	public void removeBlock(int id) {
 		List<Block> blocks = this.blocks;
 		Iterator itr = blocks.iterator();

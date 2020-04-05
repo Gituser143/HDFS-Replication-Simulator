@@ -9,7 +9,9 @@ public class Power {
 
   public int ssdActive;
   public int hddActive;
+
   public int hddSleep;
+  public int ssdSleep;
 
   public int hddTransition;
 
@@ -25,7 +27,9 @@ public class Power {
 
     this.ssdActive = 8;
     this.hddActive = 17;
-    this.hddSleep = 1;
+
+    this.hddSleep = 2;
+    this.ssdSleep = 1;
 
     this.hddTransition = 10;
 

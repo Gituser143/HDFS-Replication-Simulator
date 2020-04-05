@@ -28,7 +28,7 @@ public class Simulator {
 	private static int numberofReplicasHot = 3;
 	private static int numberofReplicasCold = 2;
 	private static int numberofDatanodes = 10000;
-	private static int dataNodeCapacity = 3200; //Gives 400 GB
+	private static int dataNodeCapacity = 320000; //Gives 400 GB
 	private static int bandwidth = 1024;
 	private static int heartbeat = 1000;
 	private static int timeout = 3;
@@ -37,6 +37,7 @@ public class Simulator {
 	private static int threshold = 5;
 	private static int totalPower = 0;
 	private static int blockPercentage = 50; //Percentage of blocks to go cold
+	private static int requiredNumberOfSsd = 3;
 	private static List<Event> simulationFailureEvents;
 
 	public static void init(String configFile) {
@@ -98,6 +99,9 @@ public class Simulator {
 				}
 				numberofSSDs = (fraction * numberofDatanodes)/100;
 			}
+			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity) * numberofReplicasHot;
+			System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -147,6 +151,11 @@ public class Simulator {
 				power.totalPower += power.hddActive;
 
 			}
+
+			for (int  i = 0; i < numberofDatanodes; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				dn.setState(1);
+			}
 		}
 		else {
 			for (int i = 0; i < numberofSSDs; i++) {
@@ -155,8 +164,12 @@ public class Simulator {
 				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 1);
 				namenode.addNode(datanodeInfo);
 				//System.out.println("Created SSD with ID " + i);
-				power.totalPower += power.ssdActive;
+				//power.totalPower += power.ssdActive;
 			}
+
+
+			power.totalPower += requiredNumberOfSsd * power.ssdActive;
+			power.totalPower += (numberofSSDs - requiredNumberOfSsd) * power.ssdSleep;
 
 			for (int i = numberofSSDs; i < numberofDatanodes; i++) {
 				allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
@@ -167,6 +180,23 @@ public class Simulator {
 				power.totalPower += power.hddSleep;
 
 			}
+
+			for (int  i = 0; i < requiredNumberOfSsd; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				dn.setState(1);
+			}
+
+			for (int  i = requiredNumberOfSsd; i < numberofSSDs; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				dn.setState(0);
+			}
+
+			for (int  i = numberofSSDs; i < numberofDatanodes; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				dn.setState(0);
+			}
+
+
 		}
 
 		System.out.println(numberofSSDs + " SSD Datanodes Created.");
@@ -196,6 +226,7 @@ public class Simulator {
 		}
 		return totalSpace;
 	}
+
 	private static void initializeBlocks() {
 		int currentDN = 0;
 		Power power = new Power();
@@ -230,11 +261,12 @@ public class Simulator {
 					System.exit(1);
 				}
 				while(!blockAdded) {
+					//System.out.println("Current Datanode is " + currentDN);
 					Datanode dn = allDatanodes.getNode(currentDN);
 					//System.out.println("Attempting to add block to node " + dn.getId() + "with space " + dn.getFreeSpace());
 					if(dn.getFreeSpace() != 0) {
 						dn.addBlock(block);
-						if(dn.getType() == 1) {
+						if(dn.getType() == 1 && dn.getState()) {
 							power.totalPower += power.writeSsd;
 							power.totalPower += power.ssdActive;
 						}
@@ -251,7 +283,7 @@ public class Simulator {
 
 					}
 					else {
-						currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
+						currentDN = (currentDN == requiredNumberOfSsd-1)? 0: currentDN+1; // Initialize all blocks to SSD
 					}
 				}
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
@@ -406,7 +438,9 @@ public class Simulator {
 		for(int i = 0; i < numberofDatanodes; i++){
 			Datanode dn = allDatanodes.getNode(i);
 
-
+			if(dn.getType() == 1 && !dn.getState()) {
+				power2.totalPower += power2.ssdSleep;
+			}
 
 			List<Block> blocks = dn.getBlocks();
 			int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
@@ -423,7 +457,7 @@ public class Simulator {
 							Block block2 = blocks2.get(blockIndex2);
 							if (block.getId() == block2.getId()) {
 								block2.changeLastAccess();
-								if(dn.getType() == 1) {
+								if(dn.getType() == 1 && dn.getState()) {
 									power2.totalPower += power2.ssdActive;
 								}
 								else {
@@ -543,6 +577,8 @@ public class Simulator {
 
 			System.out.println(power.totalPower + " Watts of Power consumed when transferring data to cold zone");
 			totalPower += power.totalPower;
+
+			//Balance hot zone here
 		}
 
 	}
@@ -550,7 +586,7 @@ public class Simulator {
 	public static void accessData(){
 		Power power = new Power();
 		if(numberofSSDs != 0) {
-			for(int i = 0; i < numberofSSDs; i++){
+			for(int i = 0; i < requiredNumberOfSsd; i++){
 				Datanode dn = allDatanodes.getNode(i);
 				List<Block> blocks = dn.getBlocks();
 				for (int blockIndex = 0; blockIndex < blocks.size(); blockIndex++){
@@ -576,6 +612,9 @@ public class Simulator {
 
 			for(int i = numberofSSDs; i < numberofDatanodes; i++) {
 				power.totalPower += power.hddSleep;
+			}
+			for(int i = requiredNumberOfSsd; i < numberofSSDs; i++ ) {
+				power.totalPower += power.ssdSleep;
 			}
 		}
 		else {
