@@ -1,6 +1,10 @@
 package hdfs.replicationsimulator;
 
 public class Power {
+
+  public int bootSsd;
+  public int bootHdd;
+
   public int writeHdd;
   public int readHdd;
 
@@ -19,6 +23,10 @@ public class Power {
 
   public Power()
   {
+
+    this.bootHdd = 7;
+    this.bootSsd = 4;
+
     this.readHdd = 6;
     this.writeHdd = 6;
 
@@ -31,7 +39,7 @@ public class Power {
     this.hddSleep = 2;
     this.ssdSleep = 1;
 
-    this.hddTransition = 10;
+    this.hddTransition = 5;
 
     this.totalPower = 0;
   }

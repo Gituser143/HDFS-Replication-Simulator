@@ -28,7 +28,7 @@ public class Simulator {
 	private static int numberofReplicasHot = 3;
 	private static int numberofReplicasCold = 2;
 	private static int numberofDatanodes = 10000;
-	private static int dataNodeCapacity = 320000; //Gives 400 GB
+	private static int dataNodeCapacity = 3200; //3200 Gives 400 GB
 	private static int bandwidth = 1024;
 	private static int heartbeat = 1000;
 	private static int timeout = 3;
@@ -100,7 +100,7 @@ public class Simulator {
 				numberofSSDs = (fraction * numberofDatanodes)/100;
 			}
 			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity) * numberofReplicasHot;
-			System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
+			//System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
 
 
 		} catch (IOException e) {
@@ -148,7 +148,7 @@ public class Simulator {
 				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
 				namenode.addNode(datanodeInfo);
 				//System.out.println("Created HDD with ID " + i);
-				power.totalPower += power.hddActive;
+				power.totalPower += power.bootHdd;
 
 			}
 
@@ -168,8 +168,8 @@ public class Simulator {
 			}
 
 
-			power.totalPower += requiredNumberOfSsd * power.ssdActive;
-			power.totalPower += (numberofSSDs - requiredNumberOfSsd) * power.ssdSleep;
+			power.totalPower += requiredNumberOfSsd * power.bootSsd;
+			power.totalPower += (numberofSSDs - requiredNumberOfSsd) * (power.bootSsd + power.ssdSleep);
 
 			for (int i = numberofSSDs; i < numberofDatanodes; i++) {
 				allDatanodes.addNode(new Datanode(i, dataNodeCapacity, 0));
@@ -200,7 +200,8 @@ public class Simulator {
 		}
 
 		System.out.println(numberofSSDs + " SSD Datanodes Created.");
-		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created\n");
+		System.out.println(requiredNumberOfSsd + " SSD Datanodes Active.");
+		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created.\n");
 		System.out.println(power.totalPower + " Watts of Power consumed for bringing up " + numberofDatanodes + " Nodes");
 		totalPower += power.totalPower;
 
@@ -441,6 +442,15 @@ public class Simulator {
 			if(dn.getType() == 1 && !dn.getState()) {
 				power2.totalPower += power2.ssdSleep;
 			}
+			else if(dn.getType() == 1 && dn.getState()) {
+				power2.totalPower += power2.ssdActive;
+			}
+			else if(dn.getType() != 1 && dn.getState()) {
+				power2.totalPower += power2.hddActive;
+			}
+			else {
+				power2.totalPower += power2.hddSleep;
+			}
 
 			List<Block> blocks = dn.getBlocks();
 			int blockPercent =(int) Math.ceil((double) (blocks.size() * blockPercentage)/100);
@@ -457,7 +467,7 @@ public class Simulator {
 							Block block2 = blocks2.get(blockIndex2);
 							if (block.getId() == block2.getId()) {
 								block2.changeLastAccess();
-								if(dn.getType() == 1 && dn.getState()) {
+								/*if(dn2.getType() == 1 && dn2.getState()) {
 									power2.totalPower += power2.ssdActive;
 								}
 								else {
@@ -468,7 +478,7 @@ public class Simulator {
 										power2.totalPower += power2.hddSleep;
 									}
 
-								}
+								}*/
 							}
 						}
 					}
@@ -484,11 +494,9 @@ public class Simulator {
 							if(block.getId() == block2.getId()){
 								if(dn2.getType() == 1){
 									power.totalPower += power.readSsd;
-									power.totalPower += power.ssdActive;
 								}
 								else {
 									power.totalPower += power.readHdd;
-									power.totalPower += power.hddActive;
 								}
 
 								block2.access();
