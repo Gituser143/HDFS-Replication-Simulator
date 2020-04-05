@@ -136,26 +136,26 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="731" y="298" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1585810842561" />
-    <state width="1320" height="69" key="GridCell.Tab.0.bottom" timestamp="1586083644436">
+    <state width="1320" height="227" key="GridCell.Tab.0.bottom" timestamp="1586085744023">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1878" height="288" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
-    <state width="1320" height="69" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
-    <state width="1320" height="69" key="GridCell.Tab.0.center" timestamp="1586083644436">
+    <state width="1320" height="227" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1586085744023" />
+    <state width="1320" height="227" key="GridCell.Tab.0.center" timestamp="1586085744023">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1878" height="288" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
-    <state width="1320" height="69" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
-    <state width="1320" height="69" key="GridCell.Tab.0.left" timestamp="1586083644435">
+    <state width="1320" height="227" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1586085744023" />
+    <state width="1320" height="227" key="GridCell.Tab.0.left" timestamp="1586085744022">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1878" height="288" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134264" />
-    <state width="1320" height="69" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1586083644435" />
-    <state width="1320" height="69" key="GridCell.Tab.0.right" timestamp="1586083644436">
+    <state width="1320" height="227" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1586085744022" />
+    <state width="1320" height="227" key="GridCell.Tab.0.right" timestamp="1586085744023">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state width="1878" height="288" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1586082134265" />
-    <state width="1320" height="69" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1586083644436" />
+    <state width="1320" height="227" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1586085744023" />
     <state width="1920" height="369" key="GridCell.Tab.1.bottom" timestamp="1585851924261">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -194,7 +194,7 @@
     <state x="616" y="239" width="686" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1585980974810" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HDFS_Replication_Simulator$Main.ic" NAME="Main Coverage Results" MODIFIED="1586083644422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/HDFS_Replication_Simulator$Main.ic" NAME="Main Coverage Results" MODIFIED="1586085744005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>hdfs.replicationsimulator.*</FILTER>
     </SUITE>
   </component>

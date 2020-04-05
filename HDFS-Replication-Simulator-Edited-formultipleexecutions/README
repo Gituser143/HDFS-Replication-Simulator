@@ -1,0 +1,13 @@
+Original README:
+```
+MapReduce QoS scheduler README:
+
+Please look first at FinalPresentation.pdf and final_report.pdf.
+```
+
+Edited Sim
+  
+percent->fraction  
+hot_zone->HZpercent  
+clusterPercentage->numberofSSDs  
+
