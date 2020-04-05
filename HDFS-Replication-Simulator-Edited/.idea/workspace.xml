@@ -11,7 +11,7 @@
     <option name="done" value="true" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="189" />
+    <option name="myElementSize" value="184" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -132,10 +132,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="643" y="265" width="624" height="548" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1583652943365" />
-    <state x="731" y="298" key="FileChooserDialogImpl" timestamp="1585810842561">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="520" y="231" width="424" height="491" key="FileChooserDialogImpl" timestamp="1586086407691">
+      <screen x="0" y="27" width="1366" height="741" />
     </state>
     <state x="731" y="298" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1585810842561" />
+    <state x="520" y="231" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.741@0.27.1366.741" timestamp="1586086407691" />
     <state width="1320" height="227" key="GridCell.Tab.0.bottom" timestamp="1586085744023">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
