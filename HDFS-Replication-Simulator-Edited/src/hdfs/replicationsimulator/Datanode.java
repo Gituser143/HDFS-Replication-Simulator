@@ -22,6 +22,8 @@ public class Datanode extends Node {
 	private List<Block> blocks;
 
 	private int type;
+
+	private int freeSpace;
 	/* 
 	 * Status
 	 */
@@ -42,6 +44,7 @@ public class Datanode extends Node {
 		this.commandQueue = new ArrayList<Event>();
 		this.pendingBlocks = new ConcurrentLinkedQueue<Block>();
 		this.type = type; // 1 for SSD 0 for HDD
+		this.freeSpace = Simulator.getCapacity();
 	}
 	
 	int getId(){
@@ -50,7 +53,7 @@ public class Datanode extends Node {
 	int getType(){
 		return this.type;
 	}
-	
+	int getFreeSpace() { return this.freeSpace; }
 	
 	/**
 	 * Adds a command to the FIFO queue of the NameNode
@@ -68,6 +71,7 @@ public class Datanode extends Node {
 	 */
 	public void addBlock(Block block){
 		blocks.add(block);
+		this.freeSpace -= 1;
 	}
 
 	public void removeBlock(int id) {

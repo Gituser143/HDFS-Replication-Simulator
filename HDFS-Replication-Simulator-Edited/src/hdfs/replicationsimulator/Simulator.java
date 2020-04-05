@@ -28,7 +28,7 @@ public class Simulator {
 	private static int numberofReplicasHot = 3;
 	private static int numberofReplicasCold = 2;
 	private static int numberofDatanodes = 10000;
-	private static int dataNodeCapacity = 320000;
+	private static int dataNodeCapacity = 3200; //Gives 400 GB
 	private static int bandwidth = 1024;
 	private static int heartbeat = 1000;
 	private static int timeout = 3;
@@ -115,6 +115,9 @@ public class Simulator {
 
 	}
 
+	public static int getCapacity() {
+		return dataNodeCapacity;
+	}
 	private static void startFailure() {
 		
 		Thread killer = new Thread(new NodeKiller());
@@ -140,7 +143,7 @@ public class Simulator {
 
 				DatanodeInfo datanodeInfo = new DatanodeInfo(i, dataNodeCapacity, 0);
 				namenode.addNode(datanodeInfo);
-				System.out.println("Created HDD with ID " + i);
+				//System.out.println("Created HDD with ID " + i);
 				power.totalPower += power.hddActive;
 
 			}
@@ -177,6 +180,22 @@ public class Simulator {
 		return totalPower;
 	}
 
+	public static long getTotalFreeSpace() {
+		long totalSpace = 0;
+		if(numberofSSDs == 0) {
+			for (int  i = 0; i < numberofDatanodes; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				totalSpace += dn.getFreeSpace();
+			}
+		}
+		else {
+			for (int  i = 0; i < numberofSSDs; i++) {
+				Datanode dn = allDatanodes.getNode(i);
+				totalSpace += dn.getFreeSpace();
+			}
+		}
+		return totalSpace;
+	}
 	private static void initializeBlocks() {
 		int currentDN = 0;
 		Power power = new Power();
@@ -204,25 +223,37 @@ public class Simulator {
 			for (int j = 0; j < numberofReplicasHot; j++) {
 				int idDatanode = currentDN;
 				//int index = idDatanode - 1;
-				Datanode dn = allDatanodes.getNode(idDatanode);
-				dn.addBlock(block);
-				if(dn.getType() == 1) {
-					power.totalPower += power.writeSsd;
-					power.totalPower += power.ssdActive;
-				}
-				else {
-					power.totalPower += power.writeHdd;
-					power.totalPower += power.hddActive;
-				}
-				namenode.initAddBlock(idDatanode, (BlockInfo)block);
-				if(numberofSSDs == 0){
-					currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 
+				boolean blockAdded = false;
+				if(getTotalFreeSpace() == 0) {
+					System.out.println("No free space in cluster. Cannot add block");
+					System.exit(1);
 				}
-				else {
-					currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
-				}
+				while(!blockAdded) {
+					Datanode dn = allDatanodes.getNode(currentDN);
+					//System.out.println("Attempting to add block to node " + dn.getId() + "with space " + dn.getFreeSpace());
+					if(dn.getFreeSpace() != 0) {
+						dn.addBlock(block);
+						if(dn.getType() == 1) {
+							power.totalPower += power.writeSsd;
+							power.totalPower += power.ssdActive;
+						}
+						else {
+							power.totalPower += power.writeHdd;
+							power.totalPower += power.hddActive;
+						}
+						namenode.initAddBlock(currentDN, (BlockInfo)block);
+						blockAdded = true;
+					}
 
+					if(numberofSSDs == 0){
+						currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
+
+					}
+					else {
+						currentDN = (currentDN == numberofSSDs-1)? 0: currentDN+1; // Initialize all blocks to SSD
+					}
+				}
 				//currentDN = (currentDN == numberofDatanodes-1)? 0: currentDN+1; // Initialize sequentially across both SSD and HDD
 			}
 		}
