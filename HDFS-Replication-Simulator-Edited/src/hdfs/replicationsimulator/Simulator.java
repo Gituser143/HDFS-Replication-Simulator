@@ -102,7 +102,7 @@ public class Simulator {
 			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity * numberofReplicasHot);
 			//System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
 			if(requiredNumberOfSsd > numberofSSDs && numberofSSDs != 0) {
-				System.out.println("Cannot Simulate. Blocks exceed Hot Zone capacity.");
+			//	System.out.println("Cannot Simulate. Blocks exceed Hot Zone capacity.");
 				System.exit(1);
 			}
 
@@ -136,7 +136,7 @@ public class Simulator {
 
 	private static void initializeNamenode() {
 		namenode = new Namenode();
-		System.out.print("Namenode Created.\n");
+		//System.out.print("Namenode Created.\n");
 	}
 
 	private static void initializeDatanodes() {
@@ -204,19 +204,23 @@ public class Simulator {
 
 		}
 
-		System.out.println(numberofSSDs + " SSD Datanodes Created.");
-		System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created.");
+		//System.out.println(numberofSSDs + " SSD Datanodes Created.");
+		//System.out.println(numberofDatanodes - numberofSSDs + " HDD Datanodes Created.");
 
-		if(numberofSSDs != 0 ) { System.out.println(requiredNumberOfSsd + " SSD Datanodes Active.\n"); }
-		else {System.out.println("\n");}
+		//if(numberofSSDs != 0 ) { System.out.println(requiredNumberOfSsd + " SSD Datanodes Active.\n"); }
+		//else {System.out.println("\n");}
 
-		System.out.println(power.totalPower + " Watts of Power consumed for bringing up " + numberofDatanodes + " Nodes");
+		//System.out.println(power.totalPower + " Watts of Power consumed for bringing up " + numberofDatanodes + " Nodes");
 		totalPower += power.totalPower;
 
 	}
 
 	public static int getTotalPower() {
 		return totalPower;
+	}
+
+	public static void setTotalPower() {
+		totalPower = 0;
 	}
 
 	public static long getTotalFreeSpace() {
@@ -266,7 +270,7 @@ public class Simulator {
 
 				boolean blockAdded = false;
 				if(getTotalFreeSpace() == 0) {
-					System.out.println("No free space in cluster. Cannot add block");
+					//System.out.println("No free space in cluster. Cannot add block");
 					System.exit(1);
 				}
 				while(!blockAdded) {
@@ -299,7 +303,7 @@ public class Simulator {
 			}
 		}
 		//System.out.print(numberofBlocks + " Blocks distributed\n\n\n");
-		System.out.print(power.totalPower + " Watts of Power consumed for initial block distribution (First write)\n");
+		//System.out.print(power.totalPower + " Watts of Power consumed for initial block distribution (First write)\n");
 		totalPower += power.totalPower;
 	}
 
@@ -516,7 +520,7 @@ public class Simulator {
 			}
 		}
 
-		System.out.print(power.totalPower + " Watts of Power consumed for initial Block access (First Read of data)\n");
+		//System.out.print(power.totalPower + " Watts of Power consumed for initial Block access (First Read of data)\n");
 		measureClusterPower();
 //		Power power1 = new Power();
 //		power1.totalPower += requiredNumberOfSsd * power1.ssdActive;
@@ -598,7 +602,7 @@ public class Simulator {
 				}
 			}
 
-			System.out.println(power.totalPower + " Watts of Power consumed when transferring data to cold zone");
+			//System.out.println(power.totalPower + " Watts of Power consumed when transferring data to cold zone");
 			totalPower += power.totalPower;
 
 			//Balance hot zone here
@@ -654,7 +658,7 @@ public class Simulator {
 			}
 
 		}
-		System.out.println(power.totalPower + " Watts of Power consumed for continued Block access (Regular reading of data)");
+		//System.out.println(power.totalPower + " Watts of Power consumed for continued Block access (Regular reading of data)");
 		totalPower += power.totalPower;
 
 	}
@@ -805,7 +809,7 @@ public class Simulator {
 		}
 
 
-		System.out.println(power.totalPower + " Watts of Power consumed for block balancing");
+		//System.out.println(power.totalPower + " Watts of Power consumed for block balancing");
 		totalPower += power.totalPower;
 		measureClusterPower();
 	}
@@ -815,7 +819,7 @@ public class Simulator {
 		power1.totalPower += requiredNumberOfSsd * power1.ssdActive;
 		power1.totalPower += (numberofSSDs - requiredNumberOfSsd) * power1.ssdSleep;
 		power1.totalPower += (numberofDatanodes - numberofSSDs) * power1.hddSleep;
-		System.out.println(power1.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)");
+		//System.out.println(power1.totalPower + " Watts of Power consumed for maintaining the infrastructure (Cluster in active state)");
 		totalPower += power1.totalPower;
 	}
 
