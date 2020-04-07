@@ -28,7 +28,7 @@ public class Main {
 		System.setOut(new PrintStream(fp));
 
 		//int i;
-		for(int i = 1000; i < 5000; i += 50){
+		for(int i = 20, j = 1000; i < 300; i += 5, j += 200){
 			Simulator.setTotalPower();
 
 			int newArgs[] = {
@@ -39,8 +39,8 @@ public class Main {
 					-1, // heartbeat
 					-1, // timeout
 					-1, // dn_capacity
-					-1, // nodes
-					i,  // nBlocks
+					i, // nodes
+					j,  // nBlocks
 					-1, // HZpercent
 					-1, // Simulated_percentage_of_data_going_cold
 					-1  // threshold
@@ -92,7 +92,7 @@ public class Main {
 				3200, // dn_capacity
 				100, 	// nodes
 				5000, // nBlocks
-				25, 	// HZpercent
+				100, 	// HZpercent
 				80, 	// Simulated_percentage_of_data_going_cold
 				5 		// threshold
 		};
