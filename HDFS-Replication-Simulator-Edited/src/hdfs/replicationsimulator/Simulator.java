@@ -102,8 +102,9 @@ public class Simulator {
 			requiredNumberOfSsd = (int) Math.ceil((double)numberofBlocks/ dataNodeCapacity * numberofReplicasHot);
 			//System.out.println("Number " + numberofSSDs + "\nRequired " + requiredNumberOfSsd);
 			if(requiredNumberOfSsd > numberofSSDs && numberofSSDs != 0) {
-			//	System.out.println("Cannot Simulate. Blocks exceed Hot Zone capacity.");
-				System.exit(1);
+				//	System.out.println("Cannot Simulate. Blocks exceed Hot Zone capacity.");
+				numberofSSDs = 0;
+				// 	System.exit(1);
 			}
 
 
