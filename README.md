@@ -1,6 +1,6 @@
 HDFS-Replication-Simulator
 ===========================
-Building over Peteratt's HDFS-Replication-Simulator to meausure energy consumption in Hadoop clusters.  
+Building over Peteratt's HDFS-Replication-Simulator to measure energy consumption in Hadoop clusters.  
   
 - HDFS-Replication-Simulator-Original : Contains the Unedited simulator.  
   
